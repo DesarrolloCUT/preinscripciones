@@ -47,7 +47,7 @@
 	      <h3>Se confirmó su inscripción a la carrera <?php $carrera;?> de para el día <?php $fecha;?> a la hora <?php $hora;?>. Deberá presentar en ese momento la siguiente documentación:</h3>
 	      <p><?php $documentacion;?></p>
 	      
-	      <h3>Su numero de inscrioción es <?=$id_reserva?></h3>
+	      <h3>Su número de inscripción es <?=$id_reserva?></h3>
 	      <p>Lugar de la inscripción:<p>
 	      <ul>
 	      	<li>Centro Univesitario de Tacuarembó

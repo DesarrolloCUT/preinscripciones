@@ -39,6 +39,7 @@
     	
     	$('#panelFecha').hide();
     	$('#panelHora').hide();
+    	//$('#btnEnviar').hide();
 		$("#siguiente1").on( "click", function() {
 			$('#panelFecha').show(); //muestro mediante id
 			$('#fecha').focus(); //pongo el foco en el control
@@ -48,6 +49,11 @@
 			$('#hora').focus(); //pongo el foco en el control
 
 		});
+		/*$("#siguiente3").on( "click", function() {
+			$('#btnEnviar').show(); //muestro mediante id
+			$('#btnEnviar').focus(); //pongo el foco en el control
+
+		});*/
 	});
 	</script>
 	<script>
@@ -184,15 +190,15 @@
 			           		</select>
 			        </div>
 		            <div class="form-group">
-			               		<button type="button" class="btn btn-lg btn-primary">Siguiente</button>
+			               		<button type="submit" id="siguiente3" class="btn btn-lg btn-primary">Siguiente</button>
 			        </div>
 		           </div>
 		    </div>
 		    </div>
 		    </div>
-		    <div class="form-group">
-				<button type="submit" class="btn btn-lg btn-primary">Enviar</button>
-			</div>
+		    <!--<div class="form-group">
+				<button type="submit" class="btn btn-lg btn-primary" id="btnEnviar" >Enviar</button>
+			</div>-->
 	    </form>
 	 </div>
 	    <!-- Bootstrap core JavaScript

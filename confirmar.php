@@ -51,7 +51,7 @@
 	      <h2>¿Confirma los datos ingresados?</h2>
 	    </div>
 	    
-	    <form role="form" method="post">
+	    <form role="form" method="post" action="resumen.php">
 	    	 <div class="row">
 	    	 	<div class="panel panel-primary">
 	    	 		<div class="panel-heading">
@@ -79,6 +79,12 @@
 			           </div>
 	    	 	</div>
 	    	 </div>
+	    	 <input type="hidden"  name="nombre" value="<?=$nombre?>"/>
+             <input type="hidden"  name="apellido" value="<?=$apellido;?>"/>
+             <input type="hidden"  name="telefono" value="<?=$telefono?>"/>
+             <input type="hidden"  name="procedencia" value="<?=$procedencia?>"/>
+             <input type="hidden"  name="email" value="<?=$email?>"/>	
+             <input type="hidden"  name="carrera" value="<?=$carrera?>"/>
 	    	<div class="form-group">
 				<button type="submit" class="btn btn-lg btn-primary">Confirmar</button>
 			</div>
