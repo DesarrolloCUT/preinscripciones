@@ -33,14 +33,15 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
     <script>
     $(document).ready(function(){
+    	
     	$('#panelFecha').hide();
     	$('#panelHora').hide();
 		$("#siguiente1").on( "click", function() {
 			$('#panelFecha').show(); //muestro mediante id
 			$('#fecha').focus(); //pongo el foco en el control
-			
 		 });
 		$("#siguiente2").on( "click", function() {
 			$('#panelHora').show(); //muestro mediante id
@@ -49,17 +50,50 @@
 		});
 	});
 	</script>
+	<script>
+    function validateForm() {
+	    var x = document.forms["myForm"]["nombre"].value;
+	    if (x==null || x=="") {
+	        alert("El Nombre es un dato que debe ingresar");
+		document.forms["myForm"]["nombre"].focus();
+	        return false;
+	    }
+	    x = document.forms["myForm"]["apellido"].value;
+	    if (x==null || x=="") {
+	        alert("El Apellido es un dato que debe ingresar");
+		document.forms["myForm"]["apellido"].focus();
+	        return false;
+	    }
+	    x = document.forms["myForm"]["telefono"].value;
+	    if (x==null || x=="") {
+	        alert("El Teléfono es un dato que debe ingresar");
+		document.forms["myForm"]["telefono"].focus();
+	        return false;
+	    }
+	    x = document.forms["myForm"]["procedencia"].value;
+	    if (x==null || x=="") {
+	        alert("La ciudad/localidad de procedencia es un dato que debe ingresar");
+		document.forms["myForm"]["procedencia"].focus();
+	        return false;
+	    }
+	    x = documenthttp://localhost/preinscripciones2015/.forms["myForm"]["email"].value;
+	    if (x==null || x=="") {
+	        alert("El Email es un dato que debe ingresar");
+		document.forms["myForm"]["email"].focus();
+	        return false;
+	    }
+	}
+</script>
   </head>
 
   <body role="document">
-
 	  <div class="container theme-showcase" role="main">
 	    <!-- Main jumbotron for a primary marketing message or call to action -->
-	    <div class="jumbotron">
+	    <div class="page-header">
 	      <h1>Preinscripciones 2015</h1>
-	      <p>Carreras en la Sede Tacuarembó de la UdelaR.</p>
+	      <h2>Carreras en la Sede Tacuarembó de la UdelaR.</h2>
 	    </div>
-	    <form role="form">
+	    <form role="form" method="post" action="confirmar.php" id="myForm" onsubmit="return validateForm()">
 		    <div class="row">
 			    <div class="col-sm-4">
 			    <div class="panel panel-primary">
@@ -79,7 +113,7 @@
 			               </div>
 			               <div class="form-group">
 			               		<label for="ciudad">Ciudad/Localidad de Origen: </label>
-			               		<input type="text" class="form-control" name="ciudad" id="ciudad"/>
+			               		<input type="text" class="form-control" name="procedencia" id="procedencia"/>
 			               </div>
 			               <div class="form-group">
 			               		<label for="telefono">Teléfono: </label>
@@ -89,6 +123,25 @@
 			               		<label for="email">E-mail*: </label>
 			               		<input type="text" class="form-control" name="email" id="email"/>
 			               </div>
+			               <div class="form-group">    
+			               <label for="carrera">Carrera a inscribirse: </label>
+			           		<select class="form-control" name="carrera" id="carrera">
+			           			 <option value="1">Tecnólogo Cárnico
+                                    </option>
+                                    <option value="2">Tecnólogo en Administración y Contabilidad
+                                    </option>
+                                    <option value="3">Tecnico Operador de Alimentos
+                                    </option>
+                                    <option value="4">Ingeniería Forestal
+                                    </option>
+                                    <option value="5">Tecnicatura Universitaria En Bienes Culturales(Patrimonio)
+                                    </option>
+                                    <option value="6">Tecnicatura en Desarrollo Sustentable
+                                    </option>
+                                    <option value="7">Licenciatura en Biología Humana
+                                    </option>
+			           		</select>
+			           		</div>
 			               <div class="form-group">
 			               		<button type="button"  id="siguiente1" class="btn btn-lg btn-primary">Siguiente</button>
 			               </div>
@@ -138,7 +191,7 @@
 		    </div>
 		    </div>
 		    <div class="form-group">
-				<button type="button" class="btn btn-lg btn-primary">Enviar</button>
+				<button type="submit" class="btn btn-lg btn-primary">Enviar</button>
 			</div>
 	    </form>
 	 </div>

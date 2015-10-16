@@ -42,10 +42,12 @@
 
 	  <div class="container theme-showcase" role="main">
 	    <!-- Main jumbotron for a primary marketing message or call to action -->
-	    <div class="jumbotron">
+	    <div class="page-header">
 	      <h1>Preinscripciones 2015</h1>
-	      <p>Se confirmó su inscripción a la carrera <?php $carrera;?> de para el día <?php $fecha;?> a la hora <?php $hora;?>. Deberá presentar en ese momento la siguiente documentación:</p>
+	      <h3>Se confirmó su inscripción a la carrera <?php $carrera;?> de para el día <?php $fecha;?> a la hora <?php $hora;?>. Deberá presentar en ese momento la siguiente documentación:</h3>
 	      <p><?php $documentacion;?></p>
+	      
+	      <h3>Su numero de inscrioción es <?=$id_reserva?></h3>
 	      <p>Lugar de la inscripción:<p>
 	      <ul>
 	      	<li>Centro Univesitario de Tacuarembó

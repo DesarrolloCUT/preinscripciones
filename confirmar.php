@@ -1,4 +1,10 @@
 <?php
+	$nombre = $_REQUEST['nombre'];
+	$apellido = $_REQUEST['apellido'];
+	$telefono = $_REQUEST['telefono'];
+	$procedencia = $_REQUEST['procedencia'];
+	$email = $_REQUEST['email'];
+	$carrera = $_REQUEST['carrera'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -40,9 +46,9 @@
 
 	  <div class="container theme-showcase" role="main">
 	    <!-- Main jumbotron for a primary marketing message or call to action -->
-	    <div class="jumbotron">
+	    <div class="page-header">
 	      <h1>Preinscripciones 2015</h1>
-	      <p>¿Confirma los datos ingresados?</p>
+	      <h2>¿Confirma los datos ingresados?</h2>
 	    </div>
 	    
 	    <form role="form" method="post">
@@ -53,22 +59,22 @@
 			           </div>			           
 			           <div class="panel-body">
 				           <div class="form-group">
-				           		<label>Nombre: </label>
+				           		<label>Nombre: <?=$nombre?></label>
 				           </div>
 				           <div class="form-group">
-				           		<label>Apellido: </label>
+				           		<label>Apellido: <?=$apellido?> </label>
 				           </div>
 				           <div class="form-group">
-				           		<label>Ciudad/Localidad: </label>
+				           		<label>Ciudad/Localidad: <?=$procedencia?></label>
 				           </div>
 				           <div class="form-group">
-				           		<label>Teléfono: </label>
+				           		<label>Teléfono: <?=$telefono?></label>
 				           </div>
 				           <div class="form-group">
-				           		<label>E-mail: </label>
+				           		<label>E-mail: <?=$email?></label>
 				           </div>
 				           <div class="form-group">
-				           		<label>Carrera: </label>
+				           		<label>Carrera: <?=$carrera?></label>
 				           </div>
 			           </div>
 	    	 	</div>
@@ -77,7 +83,7 @@
 				<button type="submit" class="btn btn-lg btn-primary">Confirmar</button>
 			</div>
 			<div class="form-group">
-				<button type="button" class="btn btn-lg btn-danger">Cambiar</button>
+				<a href="index.php"><button type="button" class="btn btn-lg btn-danger">Cambiar</button></a>
 			</div>
 	    </form>
 	   </div>
