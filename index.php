@@ -149,7 +149,7 @@
 			           		</select>
 			           		</div>
 			               <div class="form-group">
-			               		<button type="button"  id="siguiente1" class="btn btn-lg btn-primary">Siguiente</button>
+			               		<button type="button"  id="siguiente1" class="btn btn-lg btn-primary">Elegir fecha</button>
 			               </div>
 			             
 			
@@ -171,7 +171,7 @@
 			           		</select>
 			           	</div>
 			           	<div class="form-group">
-			               		<button type="button"  id="siguiente2" class="btn btn-lg btn-primary">Siguiente</button>
+			               		<button type="button"  id="siguiente2" class="btn btn-lg btn-primary">Elegir horario</button>
 			            </div>
 			           </div>
 			    </div>

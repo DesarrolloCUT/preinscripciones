@@ -1,8 +1,8 @@
 <?php
 	$nombre = $_REQUEST['nombre'];
 	$apellido = $_REQUEST['apellido'];
-	$telefono = $_REQUEST['telefono'];
 	$procedencia = $_REQUEST['procedencia'];
+	$telefono = $_REQUEST['telefono'];
 	$email = $_REQUEST['email'];
 	$carrera = $_REQUEST['carrera'];
 ?>

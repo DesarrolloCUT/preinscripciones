@@ -1,6 +1,18 @@
+
 <?php
-?>
-<?php
+
+include "class/persistencia.php";
+
+$p = new Persistencia();
+
+$nombre = $_REQUEST['nombre'];
+$apellido = $_REQUEST['apellido'];
+$procedencia = $_REQUEST['procedencia'];
+$telefono = $_REQUEST['telefono'];
+$email = $_REQUEST['email'];
+
+$p->saveUser($nombre, $apellido, $procedencia, $telefono, $email);
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
