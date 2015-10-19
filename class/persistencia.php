@@ -2,20 +2,15 @@
 
 //include "conf/config.php";
 
-$host="localhost";
-$user="root";
-$password="root";
-$database="bedelia";
-
 class Persistencia
-{
+{	
+
 	function __construct() {
 		//constructor de la clase Persistencia
 		try {
-			echo "host".$host.$user.$password;
 			
-			$mbd = new PDO('mysql:host='.$host.';dbname='.$database.'', $user, $password);
-			$mbd->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+			$mbd = new PDO('mysql:host=localhost;dbname=bedelia', 'root', 'root');
+			$mbd->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );	
 		}
 		catch (PDOException $e) {
     		print "¡Error!: " . $e->getMessage() . "<br/>";
