@@ -9,9 +9,7 @@ try {
 	$procedencia = $_REQUEST['procedencia'];
 	$telefono = $_REQUEST['telefono'];
 	$email = $_REQUEST['email'];
-	
-	echo "parametros recibidos: ". array($_REQUEST);
-	
+		
 	//$p = new Persistencia();
 	//$p->saveUser($nombre, $apellido, $procedencia, $telefono, $email);
 	
