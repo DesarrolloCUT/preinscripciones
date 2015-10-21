@@ -1,8 +1,8 @@
 <?php
 
-$host="localhost";
-$user="root";
-$password="root";
-$database="bedelia";
+define($host,"localhost");
+define($user,"root");
+define($password,"root");
+define($database,"bedelia");
 
 ?>

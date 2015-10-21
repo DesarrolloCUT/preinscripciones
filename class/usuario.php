@@ -2,20 +2,16 @@
 class Usuario
 {
     // Propiedades
-    private $id_usuario;
+   
     private $nombre;
     private $apellido;
     private $procedencia;
     private $telefono;
     private $email;
-    
-    function __construct() {
-    	//constructor de la clase Usuario
-    }
-    
+    private $id_usuario;
+        
     function __construct($nombre,$apellido,$procedencia,$telefono,$email) {
     	//constructor de la clase Usuario
-    	$this->id_usuario = $idUsuario;
     	$this->nombre = $nombre;
     	$this->apellido = $apellido;
     	$this->procedencia = $procedencia;
@@ -23,16 +19,6 @@ class Usuario
     	$this->email = $email;
     }
     
-    function __construct($idUsuario,$nombre,$apellido,$procedencia,$telefono,$email) {
-    	//constructor de la clase Usuario
-    	 $this->id_usuario = $idUsuario;
-    	 $this->nombre = $nombre;
-    	 $this->apellido = $apellido;
-    	 $this->procedencia = $procedencia;
-    	 $this->telefono = $telefono;
-    	 $this->email = $email;
-    }
-
     // Declaración de un método
     public function setIdUsuario($idUsuario) {
         $this->id_usuario = $idUsuario;

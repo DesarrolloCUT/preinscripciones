@@ -1,3 +1,8 @@
+<?php 
+	include 'class/persistencia.php';
+	setlocale(LC_TIME, 'es_ES.UTF-8');
+?>
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -39,7 +44,6 @@
     	
     	$('#panelFecha').hide();
     	$('#panelHora').hide();
-    	//$('#btnEnviar').hide();
 		$("#siguiente1").on( "click", function() {
 			$('#panelFecha').show(); //muestro mediante id
 			$('#fecha').focus(); //pongo el foco en el control
@@ -49,11 +53,6 @@
 			$('#hora').focus(); //pongo el foco en el control
 
 		});
-		/*$("#siguiente3").on( "click", function() {
-			$('#btnEnviar').show(); //muestro mediante id
-			$('#btnEnviar').focus(); //pongo el foco en el control
-
-		});*/
 	});
 	</script>
 	<script>
@@ -82,7 +81,7 @@
 		document.forms["myForm"]["procedencia"].focus();
 	        return false;
 	    }
-	    x = documenthttp://localhost/preinscripciones2015/.forms["myForm"]["email"].value;
+	    x = document.forms["myForm"]["email"].value;
 	    if (x==null || x=="") {
 	        alert("El Email es un dato que debe ingresar");
 		document.forms["myForm"]["email"].focus();
@@ -110,6 +109,10 @@
 			           <div class="panel-body">
 			             	<label><i>Ingrese sus datos presonales. Los campos marcados con * son obligatorios.</i></label>
 			             	<div class="form-group">
+			               		<label for="name">Cédula de identidad*: </label>
+			               		<input type="text" class="form-control" name="cedula" id="cedula"/>
+			               	</div>
+			             	<div class="form-group">
 			               		<label for="name">Nombre*: </label>
 			               		<input type="text" class="form-control" name="nombre" id="nombre"/>
 			               	</div>
@@ -132,20 +135,14 @@
 			               <div class="form-group">    
 			               <label for="carrera">Carrera a inscribirse: </label>
 			           		<select class="form-control" name="carrera" id="carrera">
-			           			 <option value="1">Tecnólogo Cárnico
-                                    </option>
-                                    <option value="2">Tecnólogo en Administración y Contabilidad
-                                    </option>
-                                    <option value="3">Tecnico Operador de Alimentos
-                                    </option>
-                                    <option value="4">Ingeniería Forestal
-                                    </option>
-                                    <option value="5">Tecnicatura Universitaria En Bienes Culturales(Patrimonio)
-                                    </option>
-                                    <option value="6">Tecnicatura en Desarrollo Sustentable
-                                    </option>
-                                    <option value="7">Licenciatura en Biología Humana
-                                    </option>
+			           			    <?php 
+                                    $p = new Persistencia();
+                                    
+                                    $result = $p->getCarreras();
+
+                                    foreach ($result as $row){?>
+                                    	<option value="<?=$row['id']?>"><?=$row['nombre']?></option>
+                                    <?php } ?>
 			           		</select>
 			           		</div>
 			               <div class="form-group">
@@ -167,7 +164,15 @@
 			           	<label><i>Elija una fecha para su inscripción. Solo se mostrarán las disponibles.</i></label>
 			           	<div class="form-group">    
 			           		<select class="form-control" name="fecha" id="fecha">
-			           			<option>10 de Febrero, 2016</option>
+			           			<!-- <option>10 de Febrero, 2016</option> -->
+			           			<?php 
+                                    $p = new Persistencia();
+
+                                    $result = $p->getDates();
+
+                                    foreach ($result as $row){?>
+                                    	<option value="<?=$row['id']?>"><?=$row['fecha']?></option>
+                                 <?php } ?>
 			           		</select>
 			           	</div>
 			           	<div class="form-group">

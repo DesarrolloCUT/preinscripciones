@@ -3,16 +3,21 @@
 
 include "class/persistencia.php";
 
-$p = new Persistencia();
-
-$nombre = $_REQUEST['nombre'];
-$apellido = $_REQUEST['apellido'];
-$procedencia = $_REQUEST['procedencia'];
-$telefono = $_REQUEST['telefono'];
-$email = $_REQUEST['email'];
-
-$p->saveUser($nombre, $apellido, $procedencia, $telefono, $email);
-
+try {
+	$nombre = $_REQUEST['nombre'];
+	$apellido = $_REQUEST['apellido'];
+	$procedencia = $_REQUEST['procedencia'];
+	$telefono = $_REQUEST['telefono'];
+	$email = $_REQUEST['email'];
+	
+	echo "parametros recibidos: ". array($_REQUEST);
+	
+	//$p = new Persistencia();
+	//$p->saveUser($nombre, $apellido, $procedencia, $telefono, $email);
+	
+}catch (Exception $e){
+	echo "Error: ".$e->getMessage()."<br>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

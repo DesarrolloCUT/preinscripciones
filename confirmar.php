@@ -1,4 +1,5 @@
 <?php
+    $cedula = $_REQUEST['cedula'];
 	$nombre = $_REQUEST['nombre'];
 	$apellido = $_REQUEST['apellido'];
 	$procedencia = $_REQUEST['procedencia'];
@@ -51,13 +52,16 @@
 	      <h2>¿Confirma los datos ingresados?</h2>
 	    </div>
 	    
-	    <form role="form" method="post" action="resumen.php">
+	    <form role="form" method="get" action="resumen.php">
 	    	 <div class="row">
 	    	 	<div class="panel panel-primary">
 	    	 		<div class="panel-heading">
 			             <h3 class="panel-title">Los datos que ingresó fueron los siguientes:</h3>
 			           </div>			           
 			           <div class="panel-body">
+			           	   <div class="form-group">
+				           		<label>Cédula: <?=$cedula?></label>
+				           </div>
 				           <div class="form-group">
 				           		<label>Nombre: <?=$nombre?></label>
 				           </div>
