@@ -57,7 +57,13 @@
 	</script>
 	<script>
     function validateForm() {
-	    var x = document.forms["myForm"]["nombre"].value;
+    	var x = document.forms["myForm"]["cedula"].value;
+	    if (x==null || x=="") {
+	        alert("La cédula es un dato que debe ingresar");
+		document.forms["myForm"]["cedula"].focus();
+	        return false;
+	    }
+	    x = document.forms["myForm"]["nombre"].value;
 	    if (x==null || x=="") {
 	        alert("El Nombre es un dato que debe ingresar");
 		document.forms["myForm"]["nombre"].focus();
@@ -89,6 +95,16 @@
 	    }
 	}
 </script>
+<script>
+       $(function(){
+                $('#fecha').change(function(){
+                    console.log($(this));
+                    $.get( "ABC.php" , { option : $(this).val() } , function ( data ) {
+                        $ ( '#hora' ) . html ( data ) ;
+                    } ) ;
+                });
+       });
+ </script>
   </head>
 
   <body role="document">
@@ -185,7 +201,7 @@
 		    <div class="panel panel-primary" id="panelHora">
 		
 		           <div class="panel-heading">
-		             <h3 class="panel-title">Horario</h3>
+		             <h3 class="panel-title">Horario</h3>	echo "parametros recibidos: ". array($_REQUEST);
 		           </div>
 		           <div class="panel-body">
 		           	<label><i>Elija una hora para su inscripción. Solo se mostrarán las disponibles para la fecha previamente elegida.</i></label>

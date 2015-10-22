@@ -324,8 +324,8 @@ class Persistencia
 			$result = $sentencia->execute(array($id_fecha));
 				
 			if ($result){
-				$fila = $sentencia->fetch();
-				return $fila;
+				$filas = $sentencia->fetch();
+				return $filas;
 			}else 
 				return 0;
 		
