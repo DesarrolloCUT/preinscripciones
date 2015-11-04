@@ -128,7 +128,7 @@ class Persistencia
 	
 	public function findBooking($id_booking){
 		try {
-	
+
 			$sentencia = $this->manangerConnection->prepare ("SELECT * FROM reservas WHERE id = ?");
 			$result = $sentencia->execute(array($id_booking));
 			
@@ -320,12 +320,21 @@ class Persistencia
 	public function freeTimeOnTheDate($id_fecha){
 		try {
 		
-			$sentencia = $this->manangerConnection->prepare ("SELECT id_horario FROM horarios_fechas WHERE usado = 0 AND id_fecha = ?");
-			$result = $sentencia->execute(array($id_fecha));
-				
-			if ($result){
-				$filas = $sentencia->fetch();
-				return $filas;
+			$query_result = $this->manangerConnection->query ("SELECT hf.id_horario, h.hora FROM horarios_fechas hf, horarios h WHERE hf.usado = 0 AND hf.id_fecha = ".$id_fecha." AND hf.id_horario = h.id ");
+			/*$sentencia = $this->manangerConnection->prepare ("SELECT hf.id_horario, h.hora FROM horarios_fechas hf, horarios h WHERE hf.usado = 0 AND hf.id_fecha = ? AND hf.id_horario = h.id ");
+			$result = $sentencia->execute(array($id_fecha));*/
+			
+			if ($query_result){
+				$i=0;
+				foreach($query_result as $row) {
+					$result[$i]['id_horario'] = $row['id_horario'];
+					$result[$i]['hora']=$row['hora'];
+					$i=$i+1;
+				}
+			
+			/*if ($result){
+				$filas = $sentencia->fetch();*/
+				return $result;
 			}else 
 				return 0;
 		
@@ -345,6 +354,29 @@ class Persistencia
 				foreach($query_result as $row) {
 					$result[$i]['id'] = $row['id'];
 					$result[$i]['fecha']= strftime("%A, %d de %B del %Y",strtotime($row['fecha']));
+					$i=$i+1;
+				}
+	
+				return $result;
+			}else
+				return 0;
+	
+		}
+		catch(PDOException $e) {
+			echo "¡Error!: " . $e->getMessage() . "<br/>";
+		}
+	}
+	
+	public function getTimes(){
+		try {
+				
+			$query_result = $this->manangerConnection->query ("SELECT * FROM horarios");
+	
+			if ($query_result){
+				$i=0;
+				foreach($query_result as $row) {
+					$result[$i]['id'] = $row['id'];
+					$result[$i]['hora']= $row['hora'];
 					$i=$i+1;
 				}
 	
@@ -381,5 +413,35 @@ class Persistencia
 	  		echo "¡Error!: " . $e->getMessage() . "<br/>";
 	  	}
 	}
+	
+	public function getReservas(){
+		try{
+			$query_result = $this->manangerConnection->query ("SELECT * FROM v_reservas ORDER BY id DESC");
+			
+			if ($query_result){
+				$i=0;
+				foreach($query_result as $row) {
+					$result[$i]['id'] = $row['id'];
+					$result[$i]['cedula']=$row['cedula'];
+					$result[$i]['nombre']=$row['nombre'];
+					$result[$i]['apellido']=$row['apellido'];
+					$result[$i]['procedencia']=$row['procedencia'];
+					$result[$i]['email']=$row['email'];
+					$result[$i]['telefono']=$row['telefono'];
+					$result[$i]['carrera']=$row['carrera'];
+					$result[$i]['fecha']=$row['fecha'];
+					$result[$i]['hora']=$row['hora'];
+					$i=$i+1;
+				}
+			
+				return $result;
+			}else
+				return 0;
+		}
+		catch(PDOException $e) {
+	  		echo "¡Error!: " . $e->getMessage() . "<br/>";
+	  	}
+	}
+	
 }
 ?>

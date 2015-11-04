@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="utf-8">
+    <meta charset="iso-8859-1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -59,7 +59,7 @@
     function validateForm() {
     	var x = document.forms["myForm"]["cedula"].value;
 	    if (x==null || x=="") {
-	        alert("La cédula es un dato que debe ingresar");
+	        alert("La cedula es un dato que debe ingresar");
 		document.forms["myForm"]["cedula"].focus();
 	        return false;
 	    }
@@ -77,7 +77,7 @@
 	    }
 	    x = document.forms["myForm"]["telefono"].value;
 	    if (x==null || x=="") {
-	        alert("El Teléfono es un dato que debe ingresar");
+	        alert("El Telefono es un dato que debe ingresar");
 		document.forms["myForm"]["telefono"].focus();
 	        return false;
 	    }
@@ -99,7 +99,7 @@
        $(function(){
                 $('#fecha').change(function(){
                     console.log($(this));
-                    $.get( "ABC.php" , { option : $(this).val() } , function ( data ) {
+                    $.get( "getTimeFromDate.php" , { option : $(this).val() } , function ( data ) {
                         $ ( '#hora' ) . html ( data ) ;
                     } ) ;
                 });
@@ -112,7 +112,7 @@
 	    <!-- Main jumbotron for a primary marketing message or call to action -->
 	    <div class="page-header">
 	      <h1>Preinscripciones 2015</h1>
-	      <h2>Carreras en la Sede Tacuarembó de la UdelaR.</h2>
+	      <h2>Carreras en la Sede Tacuaremb&oacute; de la UdelaR.</h2>
 	    </div>
 	    <form role="form" method="post" action="confirmar.php" id="myForm" onsubmit="return validateForm()">
 		    <div class="row">
@@ -125,7 +125,7 @@
 			           <div class="panel-body">
 			             	<label><i>Ingrese sus datos presonales. Los campos marcados con * son obligatorios.</i></label>
 			             	<div class="form-group">
-			               		<label for="name">Cédula de identidad*: </label>
+			               		<label for="name">C&eacute;dula de identidad*: </label>
 			               		<input type="text" class="form-control" name="cedula" id="cedula"/>
 			               	</div>
 			             	<div class="form-group">
@@ -141,7 +141,7 @@
 			               		<input type="text" class="form-control" name="procedencia" id="procedencia"/>
 			               </div>
 			               <div class="form-group">
-			               		<label for="telefono">Teléfono: </label>
+			               		<label for="telefono">Tel&eacute;fono: </label>
 			               		<input type="text" class="form-control" name="telefono" id="telefono"/>
 			               </div>
 			               <div class="form-group">
@@ -177,10 +177,10 @@
 			           </div>
 			           
 			           <div class="panel-body">
-			           	<label><i>Elija una fecha para su inscripción. Solo se mostrarán las disponibles.</i></label>
+			           	<label><i>Elija una fecha para su inscripci&oacute;n. Solo se mostrar&aacute;n las disponibles.</i></label>
 			           	<div class="form-group">    
 			           		<select class="form-control" name="fecha" id="fecha">
-			           			<!-- <option>10 de Febrero, 2016</option> -->
+
 			           			<?php 
                                     $p = new Persistencia();
 
@@ -201,10 +201,10 @@
 		    <div class="panel panel-primary" id="panelHora">
 		
 		           <div class="panel-heading">
-		             <h3 class="panel-title">Horario</h3>	echo "parametros recibidos: ". array($_REQUEST);
+		             <h3 class="panel-title">Horario</h3>
 		           </div>
 		           <div class="panel-body">
-		           	<label><i>Elija una hora para su inscripción. Solo se mostrarán las disponibles para la fecha previamente elegida.</i></label>
+		           	<label><i>Elija una hora para su inscripci&oacute;n. Solo se mostrar&aacute;n las disponibles para la fecha previamente elegida.</i></label>
 		            <div class="form-group">    
 			           		<select class="form-control" name="hora" id="hora">
 			           			<option>10:00</option>

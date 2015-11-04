@@ -1,10 +1,11 @@
 <?php
 	include 'class/persistencia.php';
-	$option= $_GET [ 'option' ];
-	echo $option;
+	$option= $_GET ['option' ];
+	
 	$p = new Persistencia();
 	
-	$result = $p->freeTimeOnTheDate($option);
-	foreach ($result as $row)
-		 printf ( '<option value="%s">%s</option>' , $row['id_horario'] , $row['id_horario'] ) ; 	
-?>
+	$datos = $p->freeTimeOnTheDate($option);
+	//print_r($datos);
+	foreach ($datos as $fila){?>
+		<option value="<?=$fila['id_horario']?>"><?=$fila['hora']?></option>
+<?php } ?>
