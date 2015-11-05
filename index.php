@@ -207,7 +207,7 @@
 		           	<label><i>Elija una hora para su inscripci&oacute;n. Solo se mostrar&aacute;n las disponibles para la fecha previamente elegida.</i></label>
 		            <div class="form-group">    
 			           		<select class="form-control" name="hora" id="hora">
-			           			<option>10:00</option>
+			           			
 			           		</select>
 			        </div>
 		            <div class="form-group">
