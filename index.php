@@ -104,6 +104,14 @@
                     } ) ;
                 });
        });
+       $(function(){
+           $('#carrera').change(function(){
+               console.log($(this));
+               $.get( "getDateFromRecurse.php" , { option : $(this).val() } , function ( data ) {
+                   $ ( '#fecha' ) . html ( data ) ;
+               } ) ;
+           });
+  });
  </script>
   </head>
 
@@ -126,7 +134,7 @@
 			             	<label><i>Ingrese sus datos presonales. Los campos marcados con * son obligatorios.</i></label>
 			             	<div class="form-group">
 			               		<label for="name">C&eacute;dula de identidad*: </label>
-			               		<input type="text" class="form-control" name="cedula" id="cedula"/>
+			               		<input type="text" class="form-control" name="cedula" id="cedula" placeholder="Ingrese la c&eacute;dula sin puntos ni guiones"/>
 			               	</div>
 			             	<div class="form-group">
 			               		<label for="name">Nombre*: </label>
@@ -137,11 +145,11 @@
 			               		<input type="text" class="form-control" name="apellido" id="apellido"/>
 			               </div>
 			               <div class="form-group">
-			               		<label for="ciudad">Ciudad/Localidad de Origen: </label>
+			               		<label for="ciudad">Ciudad/Localidad de Origen*: </label>
 			               		<input type="text" class="form-control" name="procedencia" id="procedencia"/>
 			               </div>
 			               <div class="form-group">
-			               		<label for="telefono">Tel&eacute;fono: </label>
+			               		<label for="telefono">Tel&eacute;fono*: </label>
 			               		<input type="text" class="form-control" name="telefono" id="telefono"/>
 			               </div>
 			               <div class="form-group">
@@ -151,6 +159,7 @@
 			               <div class="form-group">    
 			               <label for="carrera">Carrera a inscribirse: </label>
 			           		<select class="form-control" name="carrera" id="carrera">
+			           				<!-- <option >Seleccione una carrera</option> -->
 			           			    <?php 
                                     $p = new Persistencia();
                                     
@@ -182,13 +191,13 @@
 			           		<select class="form-control" name="fecha" id="fecha">
 
 			           			<?php 
-                                    $p = new Persistencia();
+                                    /*$p = new Persistencia();
 
                                     $result = $p->getDates();
 
                                     foreach ($result as $row){?>
-                                    	<option value="<?=$row['id']?>"><?=$row['fecha']?></option>
-                                 <?php } ?>
+                                    	<option value="<?=$row['id']?>"><?= utf8_decode($row['fecha'])?></option>
+                                 <?php } */?>
 			           		</select>
 			           	</div>
 			           	<div class="form-group">

@@ -114,6 +114,9 @@ class Persistencia
 			$result = $sentencia->execute(array($id_usuario,$id_carrera,$id_fecha,$id_horario));
 				
 			$lastID = $this->manangerConnection->lastInsertId();
+			
+			$sentencia2 = $this->manangerConnection->prepare ("UPDATE horarios_fechas SET usado = 1 WHERE id_fecha = ? AND id_horario = ?");
+			$result2 = $sentencia2->execute(array($id_fecha,$id_horario));
 				
 			$this->manangerConnection->commit();
 				
@@ -121,7 +124,7 @@ class Persistencia
 	
 		}
 		catch(PDOException $e) {
-			echo "¡Error!: " . $e->getMessage() . "<br/>";
+			echo "¡Error! Function newBooking: " . $e->getMessage() . "<br/>";
 		}
 	
 	}
@@ -344,6 +347,31 @@ class Persistencia
 		}
 	}
 	
+	public function dateResourceAvailable($id_recurso){
+		try {
+	
+			$query_result = $this->manangerConnection->query ("SELECT f.id, f.fecha 
+					                                           FROM fechas f, disponibilidad d, carreras c 
+					                                           WHERE f.id = d.id_fecha AND d.id_recurso = c.id AND c.id = ".$id_recurso);
+				
+			if ($query_result){
+				$i=0;
+				foreach($query_result as $row) {
+					$result[$i]['id'] = $row['id'];
+					$result[$i]['fecha']=strftime("%A, %d de %B del %Y",strtotime($row['fecha']));
+					$i=$i+1;
+				}
+					
+				return $result;
+			}else
+				return 0;
+	
+		}
+		catch(PDOException $e) {
+			echo "¡Error!: " . $e->getMessage() . "<br/>";
+		}
+	}
+	
 	public function getDates(){
 		try {
 			
@@ -355,6 +383,46 @@ class Persistencia
 					$result[$i]['id'] = $row['id'];
 					$result[$i]['fecha']= strftime("%A, %d de %B del %Y",strtotime($row['fecha']));
 					$i=$i+1;
+				}
+	
+				return $result;
+			}else
+				return 0;
+	
+		}
+		catch(PDOException $e) {
+			echo "¡Error!: " . $e->getMessage() . "<br/>";
+		}
+	}
+	
+	public function getDateFromId($id_fecha){
+		try {
+				
+			$query_result = $this->manangerConnection->query ("SELECT fecha FROM fechas WHERE id = ".$id_fecha);
+	
+			if ($query_result){
+				foreach($query_result as $row) {
+					$result = strftime("%A, %d de %B del %Y",strtotime($row['fecha']));
+				}
+	
+				return $result;
+			}else
+				return 0;
+	
+		}
+		catch(PDOException $e) {
+			echo "¡Error!: " . $e->getMessage() . "<br/>";
+		}
+	}
+	
+	public function getTimeFromId($id_hora){
+		try {
+	
+			$query_result = $this->manangerConnection->query ("SELECT hora FROM horarios WHERE id = ".$id_hora);
+	
+			if ($query_result){
+				foreach($query_result as $row) {
+					$result = $row['hora'];
 				}
 	
 				return $result;
@@ -412,6 +480,44 @@ class Persistencia
 	  	catch(PDOException $e) {
 	  		echo "¡Error!: " . $e->getMessage() . "<br/>";
 	  	}
+	}
+	
+	public function findNameCarreraFromId($id_recurso){
+		try {
+			$query_result = $this->manangerConnection->query ("SELECT nombre FROM carreras WHERE id = ".$id_recurso);
+			
+			if ($query_result){
+
+				foreach($query_result as $row) {
+					$result=$row['nombre'];
+
+				}
+			
+				return $result;
+			}else
+				return 0;
+		}catch(PDOException $e) {
+	  		echo "¡Error!: " . $e->getMessage() . "<br/>";
+	  	}
+	}
+	
+	public function findDocCarreraFromId($id_recurso){
+		try {
+			$query_result = $this->manangerConnection->query ("SELECT documentacion FROM carreras WHERE id = ".$id_recurso);
+				
+			if ($query_result){
+	
+				foreach($query_result as $row) {
+					$result=$row['documentacion'];
+	
+				}
+					
+				return $result;
+			}else
+				return 0;
+		}catch(PDOException $e) {
+			echo "¡Error!: " . $e->getMessage() . "<br/>";
+		}
 	}
 	
 	public function getReservas(){

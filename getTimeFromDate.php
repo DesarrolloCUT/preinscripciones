@@ -1,6 +1,7 @@
+<!-- <option >Seleccione una hora</option> -->
 <?php
 	include 'class/persistencia.php';
-	$option= $_GET ['option' ];
+	$option= $_GET ['option'];
 	
 	$p = new Persistencia();
 	

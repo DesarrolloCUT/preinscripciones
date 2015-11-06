@@ -1,17 +1,32 @@
 
 <?php
 
+
 include "class/persistencia.php";
 
+setlocale(LC_TIME, 'es_ES.UTF-8');
+
 try {
+	$cedula = $_REQUEST['cedula'];
 	$nombre = $_REQUEST['nombre'];
 	$apellido = $_REQUEST['apellido'];
 	$procedencia = $_REQUEST['procedencia'];
 	$telefono = $_REQUEST['telefono'];
 	$email = $_REQUEST['email'];
+	$carrera = $_REQUEST['carrera'];
+	$nomCarrera = $_REQUEST['nomCarrera'];
+	
+	$idFecha = $_REQUEST['fecha'];
+	$idHora = $_REQUEST['hora'];
+	
+	$_REQUEST=null;
 		
-	//$p = new Persistencia();
-	//$p->saveUser($nombre, $apellido, $procedencia, $telefono, $email);
+	$p = new Persistencia();
+	$documentacion= $p->findDocCarreraFromId($carrera);
+	$fecha = utf8_decode($p->getDateFromId($idFecha));
+	$hora = $p->getTimeFromId($idHora);
+	
+	$id_reserva= $p->newBooking($cedula, $carrera, $idFecha, $idHora);
 	
 }catch (Exception $e){
 	echo "Error: ".$e->getMessage()."<br>";
@@ -20,7 +35,7 @@ try {
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="utf-8">
+    <meta charset="iso-8859-1"><meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -50,7 +65,6 @@ try {
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
   </head>
 
   <body role="document">
@@ -59,17 +73,17 @@ try {
 	    <!-- Main jumbotron for a primary marketing message or call to action -->
 	    <div class="page-header">
 	      <h1>Preinscripciones 2015</h1>
-	      <h3>Se confirmó su inscripción a la carrera <?php $carrera;?> de para el día <?php $fecha;?> a la hora <?php $hora;?>. Deberá presentar en ese momento la siguiente documentación:</h3>
-	      <p><?php $documentacion;?></p>
+	      <h3>Se confirm&oacute; su inscripci&oacute;n a la carrera <b><?=$nomCarrera?></b> para el d&iacute;a <b><?=$fecha?></b> a la hora <b><?=$hora?></b>. Deber&aacute; presentar en ese momento la siguiente documentaci&oacute;n:</h3>
+	      <p><?=$documentacion?></p>
 	      
-	      <h3>Su número de inscripción es <?=$id_reserva?></h3>
-	      <p>Lugar de la inscripción:<p>
+	      <h3>Su n&uacute;mero de inscripci&oacute;n es <b><?=$id_reserva?></b></h3>
+	      <p>Lugar de la inscripci&oacute;n:<p>
 	      <ul>
-	      	<li>Centro Univesitario de Tacuarembó
-	      	<li>Dirección: Joaquín Suárez 215, Tacuarembó.   		
+	      	<li>Centro Univesitario de Tacuaremb&oacute;
+	      	<li>Direcci&oacute;n: Joaqu&iacute;n Su&aacute;rez 215, Tacuaremb&oacute;.   		
 	      	
 	      </ul>
-	      <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.openstreetmap.org/export/embed.html?bbox=-55.988420248031616%2C-31.715737462953218%2C-55.970503091812134%2C-31.70747746408136&amp;layer=mapnik&amp;marker=-31.711612119025453%2C-55.979461669921875" style="border: 1px solid black"></iframe><br/><small><a href="http://www.openstreetmap.org/?mlat=-31.71161&amp;mlon=-55.97946#map=17/-31.71161/-55.97946">Ver mapa más grande</a></small>
+	      <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.openstreetmap.org/export/embed.html?bbox=-55.988420248031616%2C-31.715737462953218%2C-55.970503091812134%2C-31.70747746408136&amp;layer=mapnik&amp;marker=-31.711612119025453%2C-55.979461669921875" style="border: 1px solid black"></iframe><br/><small><a href="http://www.openstreetmap.org/?mlat=-31.71161&amp;mlon=-55.97946#map=17/-31.71161/-55.97946">Ver mapa m&aacute;s grande</a></small>
 	    </div>
 	    
 	    
@@ -85,3 +99,38 @@ try {
   </body>
 
 </html>
+<?php
+
+ $from = "Bedelia CUT<bedelia@cut.edu.uy>";
+ $to = $email;
+ $subject = "[CUT] Pre-inscripciones a Carreras - 2015";
+
+
+$body = "<blockquote>Su reserva fué realizada con exito para la inscripción a la carrera <b>".$nomCarrera."</b></blockquote>
+                                <blockquote>El día <b>".$fecha."</b> a las <b>".$hora." hs.</b> debe concurrir a la Bedelía del CUT con la siguiente documentación:
+                                <br>
+                                ".$documentacion."
+                                </blockquote>
+                                <br>
+                                <blockquote><h4>Su número de reserva es el <b>".$id_reserva."</b></h4></blockquote>
+                                <br>
+                                <blockquote><h4>Contactos y Ubicación de la Bedelía del Centro Universitario de Tacuarembó:</h4>
+                                    <ul>
+                                        <li><b>E-mail:</b> <a href='mailto:bedelia@cut.edu.uy' target='_top'>bedelia@cut.edu.uy</a></li>
+                                        <li><b>Dirección:</b> Joaquín Suarez 215, Tacuarembó.</li>    
+                                    </ul>
+                                    <iframe src='https://www.google.com/maps/embed?pb=!1m5!3m3!1m2!1s0x95a84e879a3485a7%3A0xebc2ba106df4efbc!2sCentro+Universitario+de+Tacuaremb%C3%B3%2C+Joaquin+Suarez%2C+Tacuaremb%C3%B3%2C+Uruguay!5e0!3m2!1ses-419!2s!4v1385996651918' width='750' height='250' frameborder='0' style='border:0'></iframe>
+                                </blockquote>";
+
+ //echo $body;
+ 
+
+// Ahora se envía el e-mail usando la función mail() de PHP
+$headers  = 'MIME-Version: 1.0' . "\r\n";
+$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+$headers .= 'From: '.$from."\r\n".
+'Reply-To: '.$from."\r\n" .
+'X-Mailer: PHP/' . phpversion();
+@mail($to, $subject, $body, $headers);
+
+ ?>

@@ -7,9 +7,10 @@ try {
 	
 	$manangerConnection->beginTransaction();
 	
-	for ($i=1;$i<34;$i++){
+	for ($i=1;$i<8;$i++){
 		for ($j=1;$j<19;$j++){
-			$sentencia = $manangerConnection->prepare ("INSERT INTO horarios_fechas (id_horario,id_fecha) values (?,?)");
+			//$sentencia = $manangerConnection->prepare ("INSERT INTO horarios_fechas (id_horario,id_fecha) values (?,?)");
+			$sentencia = $manangerConnection->prepare ("INSERT INTO disponibilidad (id_recurso,id_fecha) values (?,?)");
 			$result = $sentencia->execute(array($i,$j));
 			
 		}
