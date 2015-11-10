@@ -167,10 +167,39 @@ class Persistencia
 	
 	}
 	
+	public function editBooking($id,$id_carrera,$id_fecha,$id_hora)
+	{
+		try {
+			
+			$this->manangerConnection->beginTransaction();
+			
+			$sentencia1 = $this->manangerConnection->prepare("UPDATE `horarios_fechas` as h 
+															SET h.`usado` = 0
+															WHERE EXISTS 
+															(SELECT * FROM `reservas` as r 
+															 WHERE r.`id_hora` = h.`id_horario` 
+															 AND r.`id_fecha` = h.`id_fecha` 
+															 AND r.id = ?)");
+			$result1 = $sentencia1->execute(array($id));
+			
+			$sentencia2 = $this->manangerConnection->prepare ("UPDATE reservas SET id_recurso = ?, id_fecha = ?, id_hora = ? WHERE id = ?");
+			$result2 = $sentencia2->execute(array($id_carrera, $id_fecha, $id_hora, $id));
+			
+			$sentencia3 = $this->manangerConnection->prepare ("UPDATE horarios_fechas SET usado = 1 WHERE id_fecha = ? AND id_horario = ?");
+			$result3 = $sentencia3->execute(array($id_fecha,$id_hora));
+			
+			$this->manangerConnection->commit();
+	
+		}
+		catch(PDOException $e) {
+			echo "¡Error!: " . $e->getMessage() . "<br/>";
+		}
+	}
+	
 	public function editBooking_carrera($id,$id_carrera)
 	{
 		try {
-			$sentencia = $this->manangerConnection->prepare ("UPDATE reservas SET id_carrera = :carrera WHERE id = :id");
+			$sentencia = $this->manangerConnection->prepare ("UPDATE reservas SET id_recurso = :carrera WHERE id = :id");
 	
 			$result = $sentencia->execute(array(":carrera" => $id_carrera,":id" => $id));
 	

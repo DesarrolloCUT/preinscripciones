@@ -1,6 +1,10 @@
 <?php 
 	include 'class/persistencia.php';
 	setlocale(LC_TIME, 'es_ES.UTF-8');
+	
+	session_start();
+	$verifica = 1;
+	$_SESSION["verifica"] = $verifica;
 ?>
 
 <!DOCTYPE html>
@@ -134,31 +138,31 @@
 			             	<label><i>Ingrese sus datos presonales. Los campos marcados con * son obligatorios.</i></label>
 			             	<div class="form-group">
 			               		<label for="name">C&eacute;dula de identidad*: </label>
-			               		<input type="text" class="form-control" name="cedula" id="cedula" placeholder="Ingrese la c&eacute;dula sin puntos ni guiones"/>
+			               		<input type="text" class="form-control" name="cedula" id="cedula" value="<?=$_REQUEST['cedula']?>" placeholder="Ingrese la c&eacute;dula sin puntos ni guiones"/>
 			               	</div>
 			             	<div class="form-group">
 			               		<label for="name">Nombre*: </label>
-			               		<input type="text" class="form-control" name="nombre" id="nombre"/>
+			               		<input type="text" class="form-control" name="nombre" id="nombre" value="<?=$_REQUEST['nombre']?>"/>
 			               	</div>
 			               <div class="form-group">
 			               		<label for="apellido">Apellido*: </label>
-			               		<input type="text" class="form-control" name="apellido" id="apellido"/>
+			               		<input type="text" class="form-control" name="apellido" id="apellido" value="<?=$_REQUEST['apellido']?>"/>
 			               </div>
 			               <div class="form-group">
 			               		<label for="ciudad">Ciudad/Localidad de Origen*: </label>
-			               		<input type="text" class="form-control" name="procedencia" id="procedencia"/>
+			               		<input type="text" class="form-control" name="procedencia" id="procedencia" value="<?=$_REQUEST['procedencia']?>"/>
 			               </div>
 			               <div class="form-group">
 			               		<label for="telefono">Tel&eacute;fono*: </label>
-			               		<input type="text" class="form-control" name="telefono" id="telefono"/>
+			               		<input type="text" class="form-control" name="telefono" id="telefono" value="<?=$_REQUEST['telefono']?>"/>
 			               </div>
 			               <div class="form-group">
 			               		<label for="email">E-mail*: </label>
-			               		<input type="text" class="form-control" name="email" id="email"/>
+			               		<input type="text" class="form-control" name="email" id="email" value="<?=$_REQUEST['email']?>"/>
 			               </div>
 			               <div class="form-group">    
 			               <label for="carrera">Carrera a inscribirse: </label>
-			           		<select class="form-control" name="carrera" id="carrera">
+			           		<select class="form-control" name="carrera" id="carrera" value="<?=$_REQUEST['carrera']?>">
 			           				<!-- <option >Seleccione una carrera</option> -->
 			           			    <?php 
                                     $p = new Persistencia();

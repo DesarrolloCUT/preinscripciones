@@ -14,6 +14,7 @@ if ($verifica == 1){
 	unset($_SESSION['verifica']);
 	
 	try {
+		$id_reserva = $_REQUEST['id_reserva'];
 		$cedula = $_REQUEST['cedula'];
 		$nombre = $_REQUEST['nombre'];
 		$apellido = $_REQUEST['apellido'];
@@ -22,9 +23,8 @@ if ($verifica == 1){
 		$email = $_REQUEST['email'];
 		$carrera = $_REQUEST['carrera'];
 		$nomCarrera = $_REQUEST['nomCarrera'];
-		
-		$idFecha = $_REQUEST['fecha'];
-		$idHora = $_REQUEST['hora'];
+		$fecha = $_REQUEST['fecha'];
+		$hora = $_REQUEST['hora'];
 		
 		$id_reserva_realizada = $_REQUEST['reserva_realizada'];
 		
@@ -32,20 +32,7 @@ if ($verifica == 1){
 			
 		$p = new Persistencia();
 		$documentacion= $p->findDocCarreraFromId($carrera);
-		$fecha = utf8_decode($p->getDateFromId($idFecha));
-		$hora = $p->getTimeFromId($idHora);
-		
-		if ($p->findUser($cedula)==0)
-			$p->newUser($cedula, $nombre, $apellido, $procedencia, $telefono, $email);
-		
-		if ($p->findBooking($id_reserva_realizada)== 0)
-			$id_reserva= $p->newBooking($cedula, $carrera, $idFecha, $idHora);
-		else {
-			$p->editBooking($id_reserva_realizada, $carrera, $idFecha, $idHora);
-			$id_reserva = $id_reserva_realizada;
-		}
-			
-		
+				
 	}catch (Exception $e){
 		echo "Error: ".$e->getMessage()."<br>";
 	}
@@ -94,7 +81,7 @@ if ($verifica == 1){
 	    <!-- Main jumbotron for a primary marketing message or call to action -->
 	    <div class="page-header">
 	      <h1>Preinscripciones 2015</h1>
-	      <h3>Se confirm&oacute; su inscripci&oacute;n a la carrera <b><?=$nomCarrera?></b> para el d&iacute;a <b><?=$fecha?></b> a la hora <b><?=$hora?></b>. Deber&aacute; presentar en ese momento la siguiente documentaci&oacute;n:</h3>
+	      <h3>Le recordamos su inscripci&oacute;n a la carrera <b><?=$nomCarrera?></b> para el d&iacute;a <b><?=$fecha?></b> a la hora <b><?=$hora?></b>. Deber&aacute; presentar en ese momento la siguiente documentaci&oacute;n:</h3>
 	      <p><?=$documentacion?></p>
 	      
 	      <h3>Su n&uacute;mero de inscripci&oacute;n es <b><?=$id_reserva?></b></h3>
@@ -120,38 +107,3 @@ if ($verifica == 1){
   </body>
 
 </html>
-<?php
-
- $from = "Bedelia CUT<bedelia@cut.edu.uy>";
- $to = $email;
- $subject = "[CUT] Pre-inscripciones a Carreras - 2015";
-
-
-$body = "<blockquote>Su reserva fué realizada con exito para la inscripción a la carrera <b>".$nomCarrera."</b></blockquote>
-                                <blockquote>El día <b>".$fecha."</b> a las <b>".$hora." hs.</b> debe concurrir a la Bedelía del CUT con la siguiente documentación:
-                                <br>
-                                ".$documentacion."
-                                </blockquote>
-                                <br>
-                                <blockquote><h4>Su número de reserva es el <b>".$id_reserva."</b></h4></blockquote>
-                                <br>
-                                <blockquote><h4>Contactos y Ubicación de la Bedelía del Centro Universitario de Tacuarembó:</h4>
-                                    <ul>
-                                        <li><b>E-mail:</b> <a href='mailto:bedelia@cut.edu.uy' target='_top'>bedelia@cut.edu.uy</a></li>
-                                        <li><b>Dirección:</b> Joaquín Suarez 215, Tacuarembó.</li>    
-                                    </ul>
-                                    <iframe src='https://www.google.com/maps/embed?pb=!1m5!3m3!1m2!1s0x95a84e879a3485a7%3A0xebc2ba106df4efbc!2sCentro+Universitario+de+Tacuaremb%C3%B3%2C+Joaquin+Suarez%2C+Tacuaremb%C3%B3%2C+Uruguay!5e0!3m2!1ses-419!2s!4v1385996651918' width='750' height='250' frameborder='0' style='border:0'></iframe>
-                                </blockquote>";
-
- //echo $body;
- 
-
-// Ahora se envía el e-mail usando la función mail() de PHP
-$headers  = 'MIME-Version: 1.0' . "\r\n";
-$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-$headers .= 'From: '.$from."\r\n".
-'Reply-To: '.$from."\r\n" .
-'X-Mailer: PHP/' . phpversion();
-@mail($to, $subject, $body, $headers);
-
- ?>
