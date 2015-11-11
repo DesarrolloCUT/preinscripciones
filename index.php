@@ -51,10 +51,16 @@
 		$("#siguiente1").on( "click", function() {
 			$('#panelFecha').show(); //muestro mediante id
 			$('#fecha').focus(); //pongo el foco en el control
+			$.get( "getDateFromRecurse.php" , { option : 1 } , function ( data ) {
+                $ ( '#fecha' ) . html ( data ) ;
+            } ) ;
 		 });
 		$("#siguiente2").on( "click", function() {
 			$('#panelHora').show(); //muestro mediante id
 			$('#hora').focus(); //pongo el foco en el control
+			$.get( "getTimeFromDate.php" , { option : 1 } , function ( data ) {
+                $ ( '#hora' ) . html ( data ) ;
+            } ) ; 
 
 		});
 	});

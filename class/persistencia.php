@@ -182,7 +182,7 @@ class Persistencia
 															 AND r.id = ?)");
 			$result1 = $sentencia1->execute(array($id));
 			
-			$sentencia2 = $this->manangerConnection->prepare ("UPDATE reservas SET id_recurso = ?, id_fecha = ?, id_hora = ? WHERE id = ?");
+			$sentencia2 = $this->manangerConnection->prepare ("UPDATE reservas SET id_recurso = ?, id_fecha = ?, id_hora = ?, update_date = CURRENT_TIMESTAMP WHERE id = ?");
 			$result2 = $sentencia2->execute(array($id_carrera, $id_fecha, $id_hora, $id));
 			
 			$sentencia3 = $this->manangerConnection->prepare ("UPDATE horarios_fechas SET usado = 1 WHERE id_fecha = ? AND id_horario = ?");

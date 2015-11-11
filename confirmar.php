@@ -142,6 +142,7 @@ include "class/persistencia.php";
 		}else{
 			$id_reserva_realizada = $reserva['id'];
 			$creation_date = $reserva['creation_date'];
+			$update_date = $reserva['update_date'];
 			$carrera_reserva = $reserva['id_recurso'];
 			$fecha_reserva = $reserva['id_fecha'];
 			$hora_reserva = $reserva['id_hora'];
@@ -152,52 +153,46 @@ include "class/persistencia.php";
 			
 			$textHora_reserva = $p->getTimeFromId($hora_reserva);
 			
+			if (!isset($update_date))
+				$last_update = $creation_date;
+			else 
+				$last_update = $update_date;
+			
 		?>
 		 <div class="container theme-showcase" role="main">
 		    <!-- Main jumbotron for a primary marketing message or call to action -->
 		    <div class="page-header">
 		      <h1>Preinscripciones 2015</h1>
-		      <h2>UD. ya tiene una reserva realizada en este sistema con los siguientes datos</h2>
+		      <h2>ATENCI&Oacute;N - UD. ya tiene una reserva realizada en este sistema</h2>
 		    </div>	
 		    <form role="form" method="post" action="resumen.php">
 		     <div class="row">
 	    	 	<div class="panel panel-primary">
 	    	 		<div class="panel-heading">
-			             <h3 class="panel-title">Los datos que ingres&oacute; el <?=$creation_date?> fueron los siguientes:</h3>
+			             <h3 class="panel-title"><b><?=$nombre?> <?=$apellido?></b>, los datos que ingres&oacute; el <?=$last_update?> fueron los siguientes:</h3>
 			        </div>	
 			   	
 			
 				<div class="panel-body">
-						   <div class="form-group">
-				           		<label>N&uacute;mero de Reserva: <?=$id_reserva_realizada?></label>
-				           </div>
-			           	   <div class="form-group">
-				           		<label>C&eacute;dula: <?=$cedula?></label>
+
+				           <div class="form-group">
+				           		<label>Carrera a la que se preinscribi&oacute;: <?=$nomCarrera_reserva?></label>
 				           </div>
 				           <div class="form-group">
-				           		<label>Nombre: <?=$nombre?></label>
+				           		<label>Fecha elegida: <?=$textFecha_reserva?></label>
 				           </div>
 				           <div class="form-group">
-				           		<label>Apellido: <?=$apellido?> </label>
+				           		<label>Hora elegida: <?=$textHora_reserva?></label>
 				           </div>
+
+				           <?php if ($carrera != $carrera_reserva){
+				           			$documentacion = $p->findDocCarreraFromId($carrera);
+				           ?>
 				           <div class="form-group">
-				           		<label>Ciudad/Localidad: <?=$procedencia?></label>
+				           		<label>Si quiere usar esta fecha y hora para preinscribirse a la carrera <?=$nomCarrera?>, debe concurrrir a con la siguiente documentaci&oacute;n:</label>
+				           		<p><?=$documentacion?></p>
 				           </div>
-				           <div class="form-group">
-				           		<label>Tel&eacute;fono: <?=$telefono?></label>
-				           </div>
-				           <div class="form-group">
-				           		<label>E-mail: <?=$email?></label>
-				           </div>
-				           <div class="form-group">
-				           		<label>Carrera: <?=$nomCarrera_reserva?></label>
-				           </div>
-				           <div class="form-group">
-				           		<label>Fecha: <?=$textFecha_reserva?></label>
-				           </div>
-				           <div class="form-group">
-				           		<label>Hora: <?=$textHora_reserva?></label>
-				           </div>
+				           <?php }?>
 			           </div>
 				</div>
 			</div>
@@ -216,11 +211,11 @@ include "class/persistencia.php";
             
 	    	<div class="form-group">
 	    	<a href="resumen2.php?id_reserva=<?=$id_reserva_realizada?>&cedula=<?=$cedula?>&nombre=<?=$nombre?>&apellido=<?=$apellido;?>&telefono=<?=$telefono?>&procedencia=<?=$procedencia?>&email=<?=$email?>&carrera=<?=$carrera_reserva?>&nomCarrera=<?=$nomCarrera_reserva?>&fecha=<?=$textFecha_reserva?>&hora=<?=$textHora_reserva?>">
-	    		<button type="button" class="btn btn-lg btn-primary">&iquest;La desea mantener?</button>
+	    		<button type="button" class="btn btn-lg btn-primary">&iquest;Desea mantener esa reserva?</button>
 	    	</a>
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-lg btn-danger">Actualiza la reserva con los datos que ingres&oacute;</button>
+				<button type="submit" class="btn btn-lg btn-danger">Actualiza la reserva con los datos que ingres&oacute; ahora</button>
 			</div>
 	    </form>
 		</div>
