@@ -1,53 +1,99 @@
-<?php 
-	require 'database.php';
-	$id = 0;
-	
-	if ( !empty($_GET['id'])) {
-		$id = $_REQUEST['id'];
-	}
-	
-	if ( !empty($_POST)) {
-		// keep track post values
-		$id = $_POST['id'];
-		
-		// delete data
-		$pdo = Database::connect();
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "DELETE FROM customers  WHERE id = ?";
-		$q = $pdo->prepare($sql);
-		$q->execute(array($id));
-		Database::disconnect();
-		header("Location: index.php");
-		
-	} 
+<?php
+include_once 'dbconfig.php';
+
+if(isset($_POST['btn-del']))
+{
+	$id = $_GET['delete_id'];
+	$crud->delete($id);
+	header("Location: delete.php?deleted");	
+}
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link   href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/bootstrap.min.js"></script>
-</head>
+<?php include_once 'header.php'; ?>
 
-<body>
-    <div class="container">
-    
-    			<div class="span10 offset1">
-    				<div class="row">
-		    			<h3>Delete a Customer</h3>
-		    		</div>
-		    		
-	    			<form class="form-horizontal" action="delete.php" method="post">
-	    			  <input type="hidden" name="id" value="<?php echo $id;?>"/>
-					  <p class="alert alert-error">Are you sure to delete ?</p>
-					  <div class="form-actions">
-						  <button type="submit" class="btn btn-danger">Yes</button>
-						  <a class="btn" href="index.php">No</a>
-						</div>
-					</form>
-				</div>
-				
-    </div> <!-- /container -->
-  </body>
-</html>
+<div class="clearfix"></div>
+
+<div class="container">
+
+	<?php
+	if(isset($_GET['deleted']))
+	{
+		?>
+        <div class="alert alert-success">
+    	<strong>Success!</strong> record was deleted... 
+		</div>
+        <?php
+	}
+	else
+	{
+		?>
+        <div class="alert alert-danger">
+    	<strong>Sure !</strong> to remove the following record ? 
+		</div>
+        <?php
+	}
+	?>	
+</div>
+
+<div class="clearfix"></div>
+
+<div class="container">
+ 	
+	 <?php
+	 if(isset($_GET['delete_id']))
+	 {
+		 ?>
+         <table class='table table-bordered'>
+         <tr>
+         <th>#</th>
+         <th>First Name</th>
+         <th>Last Name</th>
+         <th>E - mail ID</th>
+         <th>Gender</th>
+         </tr>
+         <?php
+         $stmt = $DB_con->prepare("SELECT * FROM tbl_users WHERE id=:id");
+         $stmt->execute(array(":id"=>$_GET['delete_id']));
+         while($row=$stmt->fetch(PDO::FETCH_BOTH))
+         {
+             ?>
+             <tr>
+             <td><?php print($row['id']); ?></td>
+             <td><?php print($row['first_name']); ?></td>
+             <td><?php print($row['last_name']); ?></td>
+             <td><?php print($row['email_id']); ?></td>
+         	 <td><?php print($row['contact_no']); ?></td>
+             </tr>
+             <?php
+         }
+         ?>
+         </table>
+         <?php
+	 }
+	 ?>
+</div>
+
+<div class="container">
+<p>
+<?php
+if(isset($_GET['delete_id']))
+{
+	?>
+  	<form method="post">
+    <input type="hidden" name="id" value="<?php echo $row['id']; ?>" />
+    <button class="btn btn-large btn-primary" type="submit" name="btn-del"><i class="glyphicon glyphicon-trash"></i> &nbsp; YES</button>
+    <a href="index.php" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; NO</a>
+    </form>  
+	<?php
+}
+else
+{
+	?>
+    <a href="index.php" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; Back to index</a>
+    <?php
+}
+?>
+</p>
+</div>	
+<?php include_once 'footer.php'; ?>

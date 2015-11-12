@@ -169,7 +169,7 @@ include "class/persistencia.php";
 		     <div class="row">
 	    	 	<div class="panel panel-primary">
 	    	 		<div class="panel-heading">
-			             <h3 class="panel-title"><b><?=$nombre?> <?=$apellido?></b>, los datos que ingres&oacute; el <?=$last_update?> fueron los siguientes:</h3>
+			             <h3 class="panel-title"><b><?=$nombre?> <?=$apellido?></b>, los datos que ingres&oacute; el <?=strftime("%A, %d de %B del %Y a las %H:%m",strtotime($last_update))?> fueron los siguientes:</h3>
 			        </div>	
 			   	
 			

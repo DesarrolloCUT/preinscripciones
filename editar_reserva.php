@@ -5,6 +5,13 @@
 	session_start();
 	$verifica = 1;
 	$_SESSION["verifica"] = $verifica;
+	
+	$id_reserva = $_REQUEST['id_reserva'];
+	
+	$p = new Persistencia();
+	
+	$reserva = $p->findBooking($id_reserva);
+	
 ?>
 
 <!DOCTYPE html>
@@ -43,28 +50,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <script>
-    $(document).ready(function(){
-    	
-    	$('#panelFecha').hide();
-    	$('#panelHora').hide();
-		$("#siguiente1").on( "click", function() {
-			$('#panelFecha').show(); //muestro mediante id
-			$('#fecha').focus(); //pongo el foco en el control
-			$.get( "getDateFromRecurse.php" , { option : 1 } , function ( data ) {
-                $ ( '#fecha' ) . html ( data ) ;
-            } ) ;
-		 });
-		$("#siguiente2").on( "click", function() {
-			$('#panelHora').show(); //muestro mediante id
-			$('#hora').focus(); //pongo el foco en el control
-			$.get( "getTimeFromDate.php" , { option : 1 } , function ( data ) {
-                $ ( '#hora' ) . html ( data ) ;
-            } ) ; 
-
-		});
-	});
-	</script>
 	<script>
     function validateForm() {
     	var x = document.forms["myForm"]["cedula"].value;
@@ -105,34 +90,50 @@
 	    }
 	}
 </script>
-<script>
-       $(function(){
-                $('#fecha').change(function(){
-                    console.log($(this));
-                    $.get( "getTimeFromDate.php" , { option : $(this).val() } , function ( data ) {
-                        $ ( '#hora' ) . html ( data ) ;
-                    } ) ;
-                });
-       });
-       $(function(){
-           $('#carrera').change(function(){
-               console.log($(this));
-               $.get( "getDateFromRecurse.php" , { option : $(this).val() } , function ( data ) {
-                   $ ( '#fecha' ) . html ( data ) ;
-               } ) ;
-           });
-  });
+	<script>
+	       $(function(){
+	                $('#fecha').change(function(){
+	                    console.log($(this));
+	                    $.get( "getTimeFromDate.php" , { option : $(this).val() } , function ( data ) {
+	                        $ ( '#hora' ) . html ( data ) ;
+	                    } ) ;
+	                });
+	       });
+	       $(function(){
+	           $('#carrera').change(function(){
+	               console.log($(this));
+	               $.get( "getDateFromRecurse.php" , { option : $(this).val() } , function ( data ) {
+	                   $ ( '#fecha' ) . html ( data ) ;
+	               } ) ;
+	           });
+	  });
  </script>
   </head>
 
   <body role="document">
 	  <div class="container theme-showcase" role="main">
 	    <!-- Main jumbotron for a primary marketing message or call to action -->
+	    <?php if ($reserva!=0){
+	    	
+	    	$carrera = $reserva['id_recurso'];
+	    	$cedula = $reserva['id_usuario'];
+	    	$id_fecha = $reserva['id_fecha'];
+	    	$id_hora = $reserva['id_hora'];
+	    	
+	    	$usuario = $p->findUser($cedula);
+	    	$nombre = $usuario['nombre'];
+	    	$apellido = $usuario['apellido'];
+	    	$procedencia = $usuario['procedencia'];
+	    	$telefono = $usuario['telefono'];
+	    	$email = $usuario['email'];
+	    	
+	    ?>
+
 	    <div class="page-header">
 	      <h1>Preinscripciones 2015</h1>
-	      <h2>Carreras en la Sede Tacuaremb&oacute; de la UdelaR.</h2>
+	      <h2>Editar la reserva a preinscripci&oacute;n Nro. <?=$id_reserva?></h2>
 	    </div>
-	    <form role="form" method="post" action="confirmar.php" id="myForm" onsubmit="return validateForm()">
+	    <form role="form" method="post" action="resumen.php" id="myForm" onsubmit="return validateForm()">
 		    <div class="row">
 			    <div class="col-sm-4">
 			    <div class="panel panel-primary">
@@ -141,49 +142,41 @@
 			             <h3 class="panel-title">Datos personales</h3>
 			           </div>			           
 			           <div class="panel-body">
-			             	<label><i>Ingrese sus datos presonales. Los campos marcados con * son obligatorios.</i></label>
+			             	
 			             	<div class="form-group">
-			               		<label for="name">C&eacute;dula de identidad*: </label>
-			               		<input type="text" class="form-control" name="cedula" id="cedula" value="<?=$_REQUEST['cedula']?>" placeholder="Ingrese la c&eacute;dula sin puntos ni guiones"/>
+			               		<label for="name">C&eacute;dula de identidad: <?=$cedula?></label>			  
 			               	</div>
 			             	<div class="form-group">
-			               		<label for="name">Nombre*: </label>
-			               		<input type="text" class="form-control" name="nombre" id="nombre" value="<?=$_REQUEST['nombre']?>"/>
+			               		<label for="name">Nombre: <?=$nombre?></label>
 			               	</div>
 			               <div class="form-group">
-			               		<label for="apellido">Apellido*: </label>
-			               		<input type="text" class="form-control" name="apellido" id="apellido" value="<?=$_REQUEST['apellido']?>"/>
+			               		<label for="apellido">Apellido: <?=$apellido?></label>
 			               </div>
 			               <div class="form-group">
-			               		<label for="ciudad">Ciudad/Localidad de Origen*: </label>
-			               		<input type="text" class="form-control" name="procedencia" id="procedencia" value="<?=$_REQUEST['procedencia']?>"/>
+			               		<label for="ciudad">Ciudad/Localidad de Origen: <?=$procedencia?></label>
 			               </div>
 			               <div class="form-group">
-			               		<label for="telefono">Tel&eacute;fono*: </label>
-			               		<input type="text" class="form-control" name="telefono" id="telefono" value="<?=$_REQUEST['telefono']?>"/>
+			               		<label for="telefono">Tel&eacute;fono: <?=$telefono?></label>
 			               </div>
 			               <div class="form-group">
-			               		<label for="email">E-mail*: </label>
-			               		<input type="text" class="form-control" name="email" id="email" value="<?=$_REQUEST['email']?>"/>
+			               		<label for="email">E-mail: <?=$email?></label>
+			               </div>
+			               <div class="form-group">
+			               		<a href="editar_usuario.php?id_user=<?=$cedula?>&id_reserva=<?=$id_reserva?>">Editar los datos del usuario</a>
 			               </div>
 			               <div class="form-group">    
 			               <label for="carrera">Carrera a inscribirse: </label>
-			           		<select class="form-control" name="carrera" id="carrera" value="<?=$_REQUEST['carrera']?>">
+			           		<select class="form-control" name="carrera" id="carrera" value="<?=$carrera?>">
 			           				<!-- <option >Seleccione una carrera</option> -->
 			           			    <?php 
-                                    $p = new Persistencia();
-                                    
+                                                                        
                                     $result = $p->getCarreras();
 
                                     foreach ($result as $row){?>
-                                    	<option value="<?=$row['id']?>"><?=$row['nombre']?></option>
+                                    	<option value="<?=$row['id']?>"<?php echo ($carrera == $row['id'])?'selected=selected"':'';?>><?=$row['nombre']?></option>
                                     <?php } ?>
 			           		</select>
-			           		</div>
-			               <div class="form-group">
-			               		<button type="button"  id="siguiente1" class="btn btn-lg btn-primary">Elegir fecha</button>
-			               </div>
-			             
+			           		</div>		             
 			
 			           </div>
 			    </div>
@@ -199,20 +192,15 @@
 			           	<label><i>Elija una fecha para su inscripci&oacute;n. Solo se mostrar&aacute;n las disponibles.</i></label>
 			           	<div class="form-group">    
 			           		<select class="form-control" name="fecha" id="fecha">
-
-			           			<?php 
-                                    /*$p = new Persistencia();
-
-                                    $result = $p->getDates();
-
-                                    foreach ($result as $row){?>
-                                    	<option value="<?=$row['id']?>"><?= utf8_decode($row['fecha'])?></option>
-                                 <?php } */?>
+								<?php 
+                                                                        
+                                    $datos = $p->dateResourceAvailable($carrera);
+									foreach ($datos as $fila){?>
+										<option value="<?=$fila['id']?>"<?php echo ($fila['id']==$id_fecha)?'selected="selected"':''?>><?=utf8_decode($fila['fecha'])?></option>
+                                <?php } ?>
 			           		</select>
 			           	</div>
-			           	<div class="form-group">
-			               		<button type="button"  id="siguiente2" class="btn btn-lg btn-primary">Elegir horario</button>
-			            </div>
+
 			           </div>
 			    </div>
 			    </div>
@@ -226,7 +214,14 @@
 		           	<label><i>Elija una hora para su inscripci&oacute;n. Solo se mostrar&aacute;n las disponibles para la fecha previamente elegida.</i></label>
 		            <div class="form-group">    
 			           		<select class="form-control" name="hora" id="hora">
-			           			
+			           			<option value="<?=$id_hora?>" selected="selected"><?=$p->getTimeFromId($id_hora)?></option>
+			           			<?php
+									
+									$datos2 = $p->getTimeOnTheDate($id_fecha);
+
+									foreach ($datos2 as $fila2){?>
+										<option value="<?=$fila2['id_horario']?>"><?=$fila2['hora']?></option>
+								<?php } ?>
 			           		</select>
 			        </div>
 		            <div class="form-group">
@@ -236,10 +231,21 @@
 		    </div>
 		    </div>
 		    </div>
-		    <!--<div class="form-group">
-				<button type="submit" class="btn btn-lg btn-primary" id="btnEnviar" >Enviar</button>
-			</div>-->
+			<input type="hidden"  name="cedula" value="<?=$cedula?>"/>
+	    	<input type="hidden"  name="nombre" value="<?=$nombre?>"/>
+            <input type="hidden"  name="apellido" value="<?=$apellido;?>"/>
+            <input type="hidden"  name="telefono" value="<?=$telefono?>"/>
+            <input type="hidden"  name="procedencia" value="<?=$procedencia?>"/>
+            <input type="hidden"  name="email" value="<?=$email?>"/>
+            <input type="hidden"  name="reserva_realizada" value="<?=$id_reserva?>"/>
 	    </form>
+	    <?php }
+	    	else{?>
+	    <div class="page-header">
+	      <h1>Preinscripciones 2015</h1>
+	      <h2>La reserva Nro. <?=$id_reserva?> no existe. Contactese con el soporte del sitio reservas@cut.edu.uy o ingrese una nueva.</h2>
+	    </div>	
+	    <?php }?>
 	 </div>
 	    <!-- Bootstrap core JavaScript
 	    ================================================== -->

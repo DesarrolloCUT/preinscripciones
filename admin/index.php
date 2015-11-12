@@ -1,69 +1,43 @@
-<?php 
-
-	include "../class/persistencia.php";
-
-	$pdo = new Persistencia();
-
+<?php
+include_once 'dbconfig.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-	<title>Preinscripciones 2015</title>
-    <meta charset="iso-8859-1">
-    <link   href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/bootstrap.min.js"></script>
-</head>
+<?php include_once 'header.php'; ?>
 
-<body>
-    <div class="container" style="width:90%;">
-    		<div class="row">
-    			<h3>Reservas</h3>
-    		</div>
-			<div class="row">
-				<p>
-					<a href="create.php" class="btn btn-success">Agregar Reserva</a>
-				</p>
-				
-				<table class="table table-striped table-bordered">
-		              <thead>
-		                <tr>
-		                  <th>N&uacute;mero de Reserva</th>
-		                  <th>C&eacute;dula</th>
-		                  <th>Nombre</th>
-		                  <th>Apellido</th>
-		                  <th>Procedencia</th>
-		                  <th>Tel&eacute;fono</th>
-		                  <th>E-mail</th>
-		                  <th>Carrera</th>
-		                  <th></th>
-		                </tr>
-		              </thead>
-		              <tbody>
-		              <?php 
-	 				   foreach ($pdo->getReservas() as $row) {
-						   		echo '<tr>';
-						   		echo '<td>'. $row['id'] . '</td>';
-						   		echo '<td>'. $row['cedula'] . '</td>';
-							   	echo '<td>'. $row['nombre'] . '</td>';
-							   	echo '<td>'. $row['apellido'] . '</td>';
-							   	echo '<td>'. $row['procedencia'] . '</td>';
-							   	echo '<td>'. $row['telefono'] . '</td>';
-							   	echo '<td>'. $row['email'] . '</td>';						   	
-							   	echo '<td>'. $row['carrera'] . '</td>';
-							   	echo '<td width=15%>';
-							   	echo '<a class="btn" href="read.php?id='.$row['id'].'">Detalle</a>';
-							   	echo '&nbsp;';
-							   	echo '<a class="btn btn-success" href="update.php?id='.$row['id'].'">Editar</a>';
-							   	echo '&nbsp;';
-							   	echo '<a class="btn btn-danger" href="delete.php?id='.$row['id'].'">Borrar</a>';
-							   	echo '</td>';
-							   	echo '</tr>';
-					   }
+<div class="clearfix"></div>
 
-					  ?>
-				      </tbody>
-	            </table>
-    	</div>
-    </div> <!-- /container -->
-  </body>
-</html>
+<div class="container">
+<a href="add-data.php" class="btn btn-large btn-info"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add Records</a>
+</div>
+
+<div class="clearfix"></div><br />
+
+<div class="container">
+	 <table class='table table-bordered table-responsive'>
+     <tr>
+     <th>#</th>
+     <th>First Name</th>
+     <th>Last Name</th>
+     <th>E - mail ID</th>
+     <th>Contact No</th>
+     <th colspan="2" align="center">Actions</th>
+     </tr>
+     <?php
+		$query = "SELECT * FROM tbl_users";       
+		$records_per_page=3;
+		$newquery = $crud->paging($query,$records_per_page);
+		$crud->dataview($newquery);
+	 ?>
+    <tr>
+        <td colspan="7" align="center">
+ 			<div class="pagination-wrap">
+            <?php $crud->paginglink($query,$records_per_page); ?>
+        	</div>
+        </td>
+    </tr>
+ 
+</table>
+   
+       
+</div>
+
+<?php include_once 'footer.php'; ?>

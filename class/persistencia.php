@@ -72,7 +72,7 @@ class Persistencia
 			$this->manangerConnection->beginTransaction();
 
 			$sentencia = $this->manangerConnection->prepare ("INSERT INTO usuarios ( cedula , nombre , apellido , procedencia , email , telefono ) VALUES (?,?,?,?,?,?)");
-			$result = $sentencia->execute(array($cedula,$nombre,$apellido,$procedencia,$telefono,$email));
+			$result = $sentencia->execute(array($cedula,$nombre,$apellido,$procedencia,$email,$telefono));
 			
 			$lastID = $this->manangerConnection->lastInsertId();
 			
@@ -85,6 +85,21 @@ class Persistencia
     		echo "¡Error!: " . $e->getMessage() . "<br/>";
 		}
 		
+	}
+	
+	public function editUser($cedula,$nombre,$apellido,$procedencia,$telefono,$email){
+		try {
+	
+			$sentencia = $this->manangerConnection->prepare ("UPDATE usuarios SET nombre = ? , apellido = ? , procedencia = ? , email = ? , telefono = ? WHERE cedula = ?");
+			$result = $sentencia->execute(array($nombre,$apellido,$procedencia,$email,$telefono,$cedula));
+				
+			return 1;
+	
+		}
+		catch(PDOException $e) {
+			echo "¡Error!: " . $e->getMessage() . "<br/>";
+		}
+	
 	}
 	
 	public function findUser($cedula){
@@ -353,8 +368,6 @@ class Persistencia
 		try {
 		
 			$query_result = $this->manangerConnection->query ("SELECT hf.id_horario, h.hora FROM horarios_fechas hf, horarios h WHERE hf.usado = 0 AND hf.id_fecha = ".$id_fecha." AND hf.id_horario = h.id ");
-			/*$sentencia = $this->manangerConnection->prepare ("SELECT hf.id_horario, h.hora FROM horarios_fechas hf, horarios h WHERE hf.usado = 0 AND hf.id_fecha = ? AND hf.id_horario = h.id ");
-			$result = $sentencia->execute(array($id_fecha));*/
 			
 			if ($query_result){
 				$i=0;
@@ -370,6 +383,31 @@ class Persistencia
 			}else 
 				return 0;
 		
+		}
+		catch(PDOException $e) {
+			echo "¡Error!: " . $e->getMessage() . "<br/>";
+		}
+	}
+	
+	public function getTimeOnTheDate($id_fecha){
+		try {
+	
+			$query_result = $this->manangerConnection->query ("SELECT hf.id_horario, h.hora FROM horarios_fechas hf, horarios h WHERE hf.id_fecha = ".$id_fecha." AND hf.id_horario = h.id ");
+				
+			if ($query_result){
+				$i=0;
+				foreach($query_result as $row) {
+					$result[$i]['id_horario'] = $row['id_horario'];
+					$result[$i]['hora']=$row['hora'];
+					$i=$i+1;
+				}
+					
+				/*if ($result){
+					$filas = $sentencia->fetch();*/
+				return $result;
+			}else
+				return 0;
+	
 		}
 		catch(PDOException $e) {
 			echo "¡Error!: " . $e->getMessage() . "<br/>";
