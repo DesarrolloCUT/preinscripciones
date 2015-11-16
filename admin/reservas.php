@@ -1,12 +1,11 @@
 <?php
 include_once 'dbconfig.php';
-?>
-<?php include_once 'header.php'; ?>
+include_once 'header.php'; ?>
 
 <div class="clearfix"></div>
 
 <div class="container">
-<a href="add-data.php" class="btn btn-large btn-info"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add Records</a>
+<!--  <a href="add-data.php?type=reserva" class="btn btn-large btn-info"><i class="glyphicon glyphicon-plus"></i> &nbsp; Agregar Reserva</a>-->
 </div>
 
 <div class="clearfix"></div><br />
@@ -14,18 +13,23 @@ include_once 'dbconfig.php';
 <div class="container">
 	 <table class='table table-bordered table-responsive'>
      <tr>
-     <th>#</th>
-     <th>First Name</th>
-     <th>Last Name</th>
-     <th>E - mail ID</th>
-     <th>Contact No</th>
-     <th colspan="2" align="center">Actions</th>
+     <th># de Reserva</th>
+     <th>C&eacute;dula</th>
+     <th>Nombre</th>
+     <th>Apellido</th>
+     <th>E-mail</th>
+     <th>Tel&eacute;fono</th>
+     <th>Procedencia</th>
+     <th>Carrera</th>
+     <th>Fecha</th>
+     <th>Hora</th>
+     <th colspan="2" align="center"></th>
      </tr>
      <?php
-		$query = "SELECT * FROM tbl_users";       
+		$query = "SELECT * FROM v_reservas";       
 		$records_per_page=3;
 		$newquery = $crud->paging($query,$records_per_page);
-		$crud->dataview($newquery);
+		$crud->dataviewReservas($newquery);
 	 ?>
     <tr>
         <td colspan="7" align="center">

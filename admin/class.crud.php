@@ -37,6 +37,14 @@ class crud
 		return $editRow;
 	}
 	
+	public function getIDCarrera($id)
+	{
+		$stmt = $this->db->prepare("SELECT * FROM carreras WHERE id=:id");
+		$stmt->execute(array(":id"=>$id));
+		$editRow=$stmt->fetch(PDO::FETCH_ASSOC);
+		return $editRow;
+	}
+	
 	public function update($id,$fname,$lname,$email,$contact)
 	{
 		try
@@ -58,6 +66,27 @@ class crud
 		catch(PDOException $e)
 		{
 			echo $e->getMessage();	
+			return false;
+		}
+	}
+	
+	public function updateCarrera($id,$nombre,$documentacion)
+	{
+		try
+		{
+			$stmt=$this->db->prepare("UPDATE carreras SET nombre=:nombre,
+		                                               documentacion=:documentacion
+													WHERE id=:id ");
+			$stmt->bindparam(":nombre",$nombre);
+			$stmt->bindparam(":documentacion",$documentacion);
+			$stmt->bindparam(":id",$id);
+			$stmt->execute();
+				
+			return true;
+		}
+		catch(PDOException $e)
+		{
+			echo $e->getMessage();
 			return false;
 		}
 	}
@@ -108,6 +137,82 @@ class crud
 		}
 		
 	}
+	public function dataviewReservas($query)
+	{
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+	
+		if($stmt->rowCount()>0)
+		{
+			while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+			{
+				?>
+	                <tr>
+	                <td><?php print($row['id']); ?></td>
+	                <td><?php print($row['cedula']); ?></td>
+	                <td><?php print($row['nombre']); ?></td>
+	                <td><?php print($row['apellido']); ?></td>
+	                <td><?php print($row['email']); ?></td>
+	                <td><?php print($row['telefono']); ?></td>
+	                <td><?php print($row['procedencia']); ?></td>
+	                <td><?php print($row['carrera']); ?></td>
+	                <td><?php print($row['fecha']); ?></td>
+	                <td><?php print($row['hora']); ?></td>
+	                <td align="center">
+	                <a href="../editar_reserva.php?id_reserva=<?php print($row['id']); ?>" class="lightview"><i class="glyphicon glyphicon-edit"></i></a>
+	                </td>
+	                <!--  <td align="center">
+	                <a href="delete.php?delete_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
+	                </td>
+	                </tr>-->
+	                <?php
+				}
+			}
+			else
+			{
+				?>
+	            <tr>
+	            <td>Nothing here...</td>
+	            </tr>
+	            <?php
+			}
+			
+		}
+		
+		public function dataviewCarreras($query)
+		{
+			$stmt = $this->db->prepare($query);
+			$stmt->execute();
+		
+			if($stmt->rowCount()>0)
+			{
+				while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+				{
+					?>
+			                <tr>
+			                <td><?php print($row['id']); ?></td>
+			                <td><?php print($row['nombre']); ?></td>
+			                <td><?php print($row['documentacion']); ?></td>
+			                <td align="center">
+			                <a href="edit-carrera.php?edit_id=<?php print($row['id']); ?>" class="lightview"><i class="glyphicon glyphicon-edit"></i></a>
+			                </td>
+			                <td align="center">
+			                <a href="delete-carrera.php?delete_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
+			                </td>
+			                </tr>
+			                <?php
+						}
+					}
+					else
+					{
+						?>
+			            <tr>
+			            <td>Nothing here...</td>
+			            </tr>
+			            <?php
+					}
+					
+				}
 	
 	public function paging($query,$records_per_page)
 	{

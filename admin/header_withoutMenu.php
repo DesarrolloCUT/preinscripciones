@@ -38,14 +38,3 @@ tinymce.init({
 
 <body>
 
-<div class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
- 
-        <div class="navbar-header">
-            <a class="navbar-brand" href="reservas.php">Listado de Reservas</a>
-            <a class="navbar-brand" href="carreras.php">Gesti&oacute;n de Carreras</a>
-            <a class="navbar-brand" href="estudiantes.php">Gesti&oacute;n de Usuarios Inscriptos</a>
-        </div>
- 
-    </div>
-</div>

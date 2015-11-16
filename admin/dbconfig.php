@@ -2,8 +2,8 @@
 
 $DB_host = "localhost";
 $DB_user = "root";
-$DB_pass = "";
-$DB_name = "dbpdo";
+$DB_pass = "root";
+$DB_name = "bedelia";
 
 
 try
