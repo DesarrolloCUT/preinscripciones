@@ -29,6 +29,24 @@ class crud
 		
 	}
 	
+	public function createCarrera($nombre,$documentacion)
+	{
+		try
+		{
+			$stmt = $this->db->prepare("INSERT INTO carreras(nombre,documentacion) VALUES(:nombre, :docuementacion)");
+			$stmt->bindparam(":nombre",$nombre);
+			$stmt->bindparam(":documentacion",$documentacion);
+			$stmt->execute();
+			return true;
+		}
+		catch(PDOException $e)
+		{
+			echo $e->getMessage();
+			return false;
+		}
+	
+	}
+	
 	public function getID($id)
 	{
 		$stmt = $this->db->prepare("SELECT * FROM tbl_users WHERE id=:id");

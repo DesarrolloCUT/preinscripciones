@@ -51,12 +51,12 @@ if(isset($msg))
  
         <tr>
             <td>Nombre</td>
-            <td><input type='text' name='nombre' class='form-control' value="<?php echo $nombre; ?>" required></td>
+            <td><input type='text' name='nombre' class='form-control' value="<?=$nombre?>" required></td>
         </tr>
  
         <tr>
             <td>Documentaci&oacute;n</td>
-            <td><textarea rows="20" cols="50" name='documentacion' class='form-control'><?php echo $documentacion; ?></textarea></td>
+            <td><textarea rows="20" cols="50" name='documentacion' class='form-control'><?=$documentacion?></textarea></td>
         </tr>
  
         <tr>
