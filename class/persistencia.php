@@ -144,6 +144,35 @@ class Persistencia
 	
 	}
 	
+	public function deleteBooking($id_reserva){
+		try {
+			$this->manangerConnection->beginTransaction();
+	
+			$sentencia1 = $this->manangerConnection->prepare ("SELECT id_usuario, id_fecha, id_hora FROM reservas WHERE id = ?");
+			$result1 = $sentencia1->execute(array($id_reserva));
+			$fila1 = $sentencia1->fetch();
+			$id_usuario = $fila1["id_usuario"];
+			$id_fecha = $fila1["id_fecha"];
+			$id_hora = $fila1["id_hora"];
+			
+			$sentencia2 = $this->manangerConnection->prepare ("DELETE FROM reservas WHERE id = ?");
+			$result2 = $sentencia2->execute(array($id_reserva));
+				
+			$sentencia3 = $this->manangerConnection->prepare ("UPDATE horarios_fechas SET usado = 0 WHERE id_fecha = ? AND id_horario = ?");
+			$result3 = $sentencia3->execute(array($id_fecha,$id_hora));
+			
+			$sentencia4 = $this->manangerConnection->prepare ("DELETE FROM usuarios WHERE cedula = ?");
+			$result4 = $sentencia4->execute(array($id_usuario));
+	
+			$this->manangerConnection->commit();
+	
+		}
+		catch(PDOException $e) {
+			echo "¡Error! Function newBooking: " . $e->getMessage() . "<br/>";
+		}
+	
+	}
+	
 	public function findBooking($id_booking){
 		try {
 
