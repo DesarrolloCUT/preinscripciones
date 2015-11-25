@@ -161,7 +161,7 @@ class Persistencia
 			
 			//guardo la reserva en la tabla de borrados
 			$sentenciaIBD = $this->manangerConnection->prepare ("INSERT INTO reservas_borradas (id, id_usuario , id_recurso , id_fecha , id_hora) VALUES (?,?,?,?,?)");
-			$sentenciaIBD->execute(array($id_reserva,$id_usuario,$id_recurso,$id_fecha,$id_hora));
+			$sentenciaIBD->execute(array($id_reserva,$id_usuario,$id_recurso,$id_fecha,$id_hora ));
 			
 			//borro la reserva solicitada
 			$sentenciaBD = $this->manangerConnection->prepare ("DELETE FROM reservas WHERE id = ?");
