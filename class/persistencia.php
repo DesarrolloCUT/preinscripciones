@@ -148,21 +148,47 @@ class Persistencia
 		try {
 			$this->manangerConnection->beginTransaction();
 	
-			$sentencia1 = $this->manangerConnection->prepare ("SELECT id_usuario, id_fecha, id_hora FROM reservas WHERE id = ?");
-			$result1 = $sentencia1->execute(array($id_reserva));
-			$fila1 = $sentencia1->fetch();
-			$id_usuario = $fila1["id_usuario"];
-			$id_fecha = $fila1["id_fecha"];
-			$id_hora = $fila1["id_hora"];
+			//obtengo los datos de la reserva
+			$sentenciaSB = $this->manangerConnection->prepare ("SELECT * FROM reservas WHERE id = ?");
+			$sentenciaSB->execute(array($id_reserva));
+			$filaSB = $sentenciaSB->fetch();
+			$id_usuario = $filaSB["id_usuario"];
+			$id_fecha = $filaSB["id_fecha"];
+			$id_hora = $filaSB["id_hora"];
+			$id_recurso = $filaSB["id_recurso"];
+			$creation_date = $filaSB["creation_date"];
+			$update_date = $filaSB["update_date"];
 			
-			$sentencia2 = $this->manangerConnection->prepare ("DELETE FROM reservas WHERE id = ?");
-			$result2 = $sentencia2->execute(array($id_reserva));
+			//guardo la reserva en la tabla de borrados
+			$sentenciaIBD = $this->manangerConnection->prepare ("INSERT INTO reservas_borradas (id, id_usuario , id_recurso , id_fecha , id_hora) VALUES (?,?,?,?,?)");
+			$sentenciaIBD->execute(array($id_reserva,$id_usuario,$id_recurso,$id_fecha,$id_hora));
+			
+			//borro la reserva solicitada
+			$sentenciaBD = $this->manangerConnection->prepare ("DELETE FROM reservas WHERE id = ?");
+			$sentenciaBD->execute(array($id_reserva));
 				
-			$sentencia3 = $this->manangerConnection->prepare ("UPDATE horarios_fechas SET usado = 0 WHERE id_fecha = ? AND id_horario = ?");
-			$result3 = $sentencia3->execute(array($id_fecha,$id_hora));
+			//libero fecha y hora para otra reserva
+			$sentenciaFTD = $this->manangerConnection->prepare ("UPDATE horarios_fechas SET usado = 0 WHERE id_fecha = ? AND id_horario = ?");
+			$sentenciaFTD->execute(array($id_fecha,$id_hora));
 			
-			$sentencia4 = $this->manangerConnection->prepare ("DELETE FROM usuarios WHERE cedula = ?");
-			$result4 = $sentencia4->execute(array($id_usuario));
+			//obtengo los datos del usuario
+			$sentenciaSU = $this->manangerConnection->prepare ("SELECT * FROM usuarios WHERE cedula = ?");
+			$sentenciaSU->execute(array($id_usuario));
+			$filaSU = $sentenciaSU->fetch();
+			$cedula = $filaSU["cedula"];
+			$nombre = $filaSU["nombre"];
+			$apellido = $filaSU["apellido"];
+			$procedencia = $filaSU["procedencia"];
+			$email = $filaSU["email"];
+			$telefono = $filaSU["telefono"];
+			
+			//guardo los datos del usuario en la tabla de borrados
+			$sentenciaIUD = $this->manangerConnection->prepare ("INSERT INTO usuarios_borrados ( cedula , nombre , apellido , procedencia , email , telefono ) VALUES (?,?,?,?,?,?)");
+			$sentenciaIUD->execute(array($cedula,$nombre,$apellido,$procedencia,$email,$telefono));
+			
+			//borro el usuario solicitado
+			$sentenciaUD = $this->manangerConnection->prepare ("DELETE FROM usuarios WHERE cedula = ?");
+			$sentenciaUD->execute(array($id_usuario));
 	
 			$this->manangerConnection->commit();
 	

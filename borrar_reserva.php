@@ -76,7 +76,7 @@
 	      <h1>Preinscripciones 2015</h1>
 	      <h2>Editar la reserva a preinscripci&oacute;n Nro. <?=$id_reserva?></h2>
 	    </div>
-	    <form role="form" method="post" action="resumen.php" id="myForm" onsubmit="return validateForm()">
+	    <form role="form" method="post" action="resumen3.php" id="myForm" onsubmit="return validateForm()">
 		    <div class="row">
 		    <div class="col-sm-4">
 			    <div class="panel panel-danger">
