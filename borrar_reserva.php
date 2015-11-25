@@ -145,7 +145,7 @@
 	    	else{?>
 	    <div class="page-header">
 	      <h1>Preinscripciones 2015</h1>
-	      <h2>La reserva Nro. <?=$id_reserva?> no existe. Contactese con el soporte del sitio reservas@cut.edu.uy o ingrese una nueva.</h2>
+	      <h2>La reserva Nro. <?=$id_reserva?> no existe. Contactese con el soporte del sitio informatica@cut.edu.uy o ingrese una nueva.</h2>
 	    </div>	
 	    <?php }?>
 	 </div>
