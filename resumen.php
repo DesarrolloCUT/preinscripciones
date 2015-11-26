@@ -4,7 +4,7 @@
 
 include "class/persistencia.php";
 
-setlocale(LC_TIME, 'es_ES.UTF-8');
+setlocale(LC_TIME, 'es_UY.UTF-8');
 
 session_start();
 
@@ -21,8 +21,7 @@ if ($verifica == 1){
 		$telefono = $_REQUEST['telefono'];
 		$email = $_REQUEST['email'];
 		$carrera = $_REQUEST['carrera'];
-		$nomCarrera = $_REQUEST['nomCarrera'];
-		
+
 		$idFecha = $_REQUEST['fecha'];
 		$idHora = $_REQUEST['hora'];
 		
@@ -34,6 +33,12 @@ if ($verifica == 1){
 		$documentacion= $p->findDocCarreraFromId($carrera);
 		$fecha = utf8_decode($p->getDateFromId($idFecha));
 		$hora = $p->getTimeFromId($idHora);
+
+		if(isset($_REQUEST['nomCarrera']))
+			$nomCarrera = $_REQUEST['nomCarrera'];
+		else{
+			$nomCarrera = $p->findNameCarreraFromId($carrera);
+		}
 		
 		if ($p->findUser($cedula)==0)
 			$p->newUser($cedula, $nombre, $apellido, $procedencia, $telefono, $email);
@@ -64,7 +69,7 @@ if ($verifica == 1){
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title>Preinscripciones 2015</title>
+    <title>Preinscripciones 2016</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -93,7 +98,7 @@ if ($verifica == 1){
 	  <div class="container theme-showcase" role="main">
 	    <!-- Main jumbotron for a primary marketing message or call to action -->
 	    <div class="page-header">
-	      <h1>Preinscripciones 2015</h1>
+	      <h1>Preinscripciones 2016</h1>
 	      <h3>Se confirm&oacute; su inscripci&oacute;n a la carrera <b><?=$nomCarrera?></b> para el d&iacute;a <b><?=$fecha?></b> a la hora <b><?=$hora?></b>. Deber&aacute; presentar en ese momento la siguiente documentaci&oacute;n:</h3>
 	      <p><?=$documentacion?></p>
 	      

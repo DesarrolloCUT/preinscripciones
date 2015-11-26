@@ -2,7 +2,7 @@
 
 $DB_host = "localhost";
 $DB_user = "root";
-$DB_pass = "root";
+$DB_pass = "50p0rt3";
 $DB_name = "bedelia";
 
 

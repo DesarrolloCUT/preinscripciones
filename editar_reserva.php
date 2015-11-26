@@ -1,6 +1,6 @@
 <?php 
 	include 'class/persistencia.php';
-	setlocale(LC_TIME, 'es_ES.UTF-8');
+	setlocale(LC_TIME, 'es_UY.UTF-8');
 	
 	session_start();
 	$verifica = 1;
@@ -126,11 +126,12 @@
 	    	$procedencia = $usuario['procedencia'];
 	    	$telefono = $usuario['telefono'];
 	    	$email = $usuario['email'];
-	    	
+
+    	
 	    ?>
 
 	    <div class="page-header">
-	      <h1>Preinscripciones 2015</h1>
+	      <h1>Preinscripciones 2016</h1>
 	      <h2>Editar la reserva a preinscripci&oacute;n Nro. <?=$id_reserva?></h2>
 	    </div>
 	    <form role="form" method="post" action="resumen.php" id="myForm" onsubmit="return validateForm()">

@@ -50,7 +50,7 @@ if ($verifica == 1){
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title>Preinscripciones 2015</title>
+    <title>Preinscripciones 2016</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -79,7 +79,7 @@ if ($verifica == 1){
 	  <div class="container theme-showcase" role="main">
 	    <!-- Main jumbotron for a primary marketing message or call to action -->
 	    <div class="page-header">
-	      <h1>Preinscripciones 2015</h1>
+	      <h1>Preinscripciones 2016</h1>
 	      <h3>Se confirm&oacute; su borrado de la reserva <?=$id_reserva?> correspondiente a los siguientes datos:</h3>
 	      <ul>
 	      <li>Carrera: <b><?=$nomCarrera?></b></li>

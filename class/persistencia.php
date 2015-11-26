@@ -12,7 +12,7 @@ class Persistencia
 
 		try {
 			
-			$this->manangerConnection = new PDO('mysql:host=localhost;dbname=bedelia', 'root', 'root');
+			$this->manangerConnection = new PDO('mysql:host=localhost;dbname=bedelia', 'root', '50p0rt3');
 			$this->manangerConnection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );	
 		}
 		catch (PDOException $e) {
@@ -194,7 +194,7 @@ class Persistencia
 	
 		}
 		catch(PDOException $e) {
-			echo "¡Error! Function newBooking: " . $e->getMessage() . "<br/>";
+			echo "¡Error! Function deleteBooking: " . $e->getMessage() . "<br/>";
 		}
 	
 	}
@@ -480,7 +480,7 @@ class Persistencia
 				$i=0;
 				foreach($query_result as $row) {
 					$result[$i]['id'] = $row['id'];
-					$result[$i]['fecha']=strftime("%A, %d de %B del %Y",strtotime($row['fecha']));
+					$result[$i]['fecha']=strftime("%d de %B del %Y",strtotime($row['fecha']));
 					$i=$i+1;
 				}
 					
@@ -503,7 +503,7 @@ class Persistencia
 				$i=0;
 				foreach($query_result as $row) {
 					$result[$i]['id'] = $row['id'];
-					$result[$i]['fecha']= strftime("%A, %d de %B del %Y",strtotime($row['fecha']));
+					$result[$i]['fecha']= strftime("%d de %B del %Y",strtotime($row['fecha']));
 					$i=$i+1;
 				}
 	
@@ -524,7 +524,7 @@ class Persistencia
 	
 			if ($query_result){
 				foreach($query_result as $row) {
-					$result = strftime("%A, %d de %B del %Y",strtotime($row['fecha']));
+					$result = strftime("%d de %B del %Y",strtotime($row['fecha']));
 				}
 	
 				return $result;

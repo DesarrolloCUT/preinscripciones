@@ -25,7 +25,7 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title>Preinscripciones 2015</title>
+    <title>Preinscripciones 2016</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -73,7 +73,7 @@
 	    ?>
 
 	    <div class="page-header">
-	      <h1>Preinscripciones 2015</h1>
+	      <h1>Preinscripciones 2016</h1>
 	      <h2>Editar la reserva a preinscripci&oacute;n Nro. <?=$id_reserva?></h2>
 	    </div>
 	    <form role="form" method="post" action="resumen3.php" id="myForm" onsubmit="return validateForm()">

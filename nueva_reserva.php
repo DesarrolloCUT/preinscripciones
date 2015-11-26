@@ -1,6 +1,6 @@
 <?php 
 	include 'class/persistencia.php';
-	setlocale(LC_TIME, 'es_ES.UTF-8');
+	setlocale(LC_TIME, 'es_UY.UTF-8');
 	
 	session_start();
 	$verifica = 1;
@@ -18,7 +18,7 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title>Preinscripciones 2015</title>
+    <title>Preinscripciones 2016</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -45,20 +45,20 @@
     
     <script>
     $(document).ready(function(){
-    	
+    	//$('#aviso').hide();
     	$('#panelFecha').hide();
     	$('#panelHora').hide();
 		$("#siguiente1").on( "click", function() {
 			$('#panelFecha').show(); //muestro mediante id
 			$('#fecha').focus(); //pongo el foco en el control
-			$.get( "getDateFromRecurse.php" , { option : 1 } , function ( data ) {
+			$.get( "getDateFromRecurse.php" , { option : $('#carrera').val() } , function ( data ) {
                 $ ( '#fecha' ) . html ( data ) ;
             } ) ;
 		 });
 		$("#siguiente2").on( "click", function() {
 			$('#panelHora').show(); //muestro mediante id
 			$('#hora').focus(); //pongo el foco en el control
-			$.get( "getTimeFromDate.php" , { option : 1 } , function ( data ) {
+			$.get( "getTimeFromDate.php" , { option : $('#fecha').val() } , function ( data ) {
                 $ ( '#hora' ) . html ( data ) ;
             } ) ; 
 
@@ -70,6 +70,8 @@
     	var x = document.forms["myForm"]["cedula"].value;
 	    if (x==null || x=="") {
 	        alert("La cedula es un dato que debe ingresar");
+		/*document.getElementById("aviso").show();
+		document.getElementById("aviso").innerHTML='La cedula es un dato que debe ingresar';*/
 		document.forms["myForm"]["cedula"].focus();
 	        return false;
 	    }
@@ -106,32 +108,35 @@
 	}
 </script>
 	<script>
-       $(function(){
-                $('#fecha').change(function(){
-                    console.log($(this));
-                    $.get( "getTimeFromDate.php" , { option : $(this).val() } , function ( data ) {
-                        $ ( '#hora' ) . html ( data ) ;
-                    } ) ;
-                });
-       });
-       $(function(){
-           $('#carrera').change(function(){
-               console.log($(this));
-               $.get( "getDateFromRecurse.php" , { option : $(this).val() } , function ( data ) {
-                   $ ( '#fecha' ) . html ( data ) ;
-               } ) ;
-           });
-       });
- 	</script>
+	       $(function(){
+	                $('#fecha').change(function(){
+	                    console.log($(this));
+	                    $.get( "getTimeFromDate.php" , { option : $(this).val() } , function ( data ) {
+	                        $ ( '#hora' ) . html ( data ) ;
+	                    } ) ;
+	                });
+	       });
+	       $(function(){
+	           $('#carrera').change(function(){
+	               console.log($(this));
+	               $.get( "getDateFromRecurse.php" , { option : $(this).val() } , function ( data ) {
+	                   $ ( '#fecha' ) . html ( data ) ;
+	               } ) ;
+	           });
+	  });
+ </script>
   </head>
 
   <body role="document">
 	  <div class="container theme-showcase" role="main">
 	    <!-- Main jumbotron for a primary marketing message or call to action -->
 	    <div class="page-header">
-	      <h1>Preinscripciones 2015</h1>
+	      <h1>Preinscripciones 2016</h1>
 	      <h2>Carreras en la Sede Tacuaremb&oacute; de la UdelaR.</h2>
 	    </div>
+	    <!--<div class="alert alert-warning">
+  		<strong>¡Atención!</strong> <div id="aviso"></div>
+	   </div>-->
 	    <form role="form" method="post" action="confirmar.php" id="myForm" onsubmit="return validateForm()">
 		    <div class="row">
 			    <div class="col-sm-4">
