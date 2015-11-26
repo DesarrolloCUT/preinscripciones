@@ -2,7 +2,7 @@
 
 define($host,"localhost");
 define($user,"root");
-define($password,"50p0rt3");
+define($password,"root");
 define($database,"bedelia");
 
 ?>

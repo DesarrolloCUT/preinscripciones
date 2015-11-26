@@ -12,7 +12,7 @@ class Persistencia
 
 		try {
 			
-			$this->manangerConnection = new PDO('mysql:host=localhost;dbname=bedelia', 'root', '50p0rt3');
+			$this->manangerConnection = new PDO('mysql:host=localhost;dbname=bedelia', 'root', 'root');
 			$this->manangerConnection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );	
 		}
 		catch (PDOException $e) {
